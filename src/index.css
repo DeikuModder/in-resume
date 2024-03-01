@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hideOnPrint {
+  @media print {
+    display: none;
+  }
+}
+
+ul {
+  list-style-type: disc;
+}

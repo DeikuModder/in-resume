@@ -1,13 +1,57 @@
 import useCVInfo from "@/hooks/useCVInfo";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRef } from "react";
 
 const Hero = () => {
-  const { cvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo } = useCVInfo();
+  const imageInputRef = useRef(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+
+    setCvInfo({ ...cvInfo, pictureUrl: url });
+  };
+
+  const handleDeleteImage = () => {
+    setCvInfo({ ...cvInfo, pictureUrl: "" });
+  };
 
   return (
     <header className="mb-4" id="hero-header">
-      <h3 className="text-5xl font-bold mb-2 w-fit">
-        {cvInfo.name ? cvInfo.name : "Type your name here"}
-      </h3>
+      <div className="flex gap-12">
+        <h3 className="text-5xl font-bold mb-2 w-fit">
+          {cvInfo.name ? cvInfo.name : "Type your name here"}
+        </h3>
+
+        {cvInfo.pictureUrl ? (
+          <div>
+            <img
+              src={cvInfo.pictureUrl}
+              alt="Profile"
+              className=" aspect-square w-[150px] object-contain "
+            />
+            <button
+              onClick={handleDeleteImage}
+              className="hideOnPrint relative right-0 top-0 text-2xl font-bold opacity-20 hover:opacity-100"
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          </div>
+        ) : (
+          <label className="hideOnPrint">
+            Upload
+            <input
+              type="file"
+              id="image-input"
+              ref={imageInputRef}
+              onChange={handleImageUpload}
+            />
+          </label>
+        )}
+      </div>
+
       <h3 className="text-4xl">
         {cvInfo.role ? cvInfo.role : "Your role here"}
       </h3>

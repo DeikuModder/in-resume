@@ -8,7 +8,7 @@ function App() {
     <>
       <Header />
       <CVInfoProvider>
-        <main className="w-[100%] h-[100vh] flex justify-center items-center">
+        <main className="flex justify-center items-center">
           <BasicDesign />
           <FormMenu />
         </main>

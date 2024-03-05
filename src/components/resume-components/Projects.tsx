@@ -17,7 +17,7 @@ const Projects = () => {
         <></>
       ) : (
         <Section sectionTitle="Projects" sectionId="projects-section">
-          <ul className="w-[100%] flex gap-4">
+          <ul className=" inline-flex flex-wrap gap-4 list-none">
             {cvInfo.projects.map((project, index) => {
               return (
                 <li
@@ -26,7 +26,7 @@ const Projects = () => {
                 >
                   <div className="flex">
                     <a href={project.project_link} target="_blank">
-                      <h3 className="text-lg font-semibold w-[50%]">
+                      <h3 className="text-lg font-semibold">
                         {project.project_name}
                       </h3>
                     </a>
@@ -34,14 +34,9 @@ const Projects = () => {
                   </div>
                   <p>{project.description}</p>
                   <div className="flex gap-2">
-                    {project.tags &&
-                      project.tags.map((tag) => {
-                        return (
-                          <p className="bg-neutral-300 w-fit p-1 rounded-lg">
-                            {tag}
-                          </p>
-                        );
-                      })}
+                    <p className="bg-neutral-300 w-fit p-1 rounded-lg">
+                      {project.tags}
+                    </p>
                   </div>
                 </li>
               );

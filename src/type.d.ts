@@ -18,16 +18,24 @@ export interface Projects {
   project_name: string;
   project_link: string;
   description: string;
-  tags: string[];
+  tags: string;
 }
 
 export interface Languages {
-  language: string;
+  languageName: string;
   level: string;
+}
+
+export interface Certificates {
+  title: string;
+  issuing_authority: string;
+  start_date: string;
+  end_date: string;
 }
 
 export interface ResumeInfo {
   name: string;
+  pictureUrl?: string;
   role: string;
   address: string;
   email: string;
@@ -39,4 +47,6 @@ export interface ResumeInfo {
   education: Education[];
   experience: Jobs[];
   languages: Languages[];
+  skills: string[];
+  certificates: Certificates[];
 }

@@ -2,30 +2,11 @@ import { useInfoData } from "@/Providers/useInfoData";
 
 const useCVInfo = () => {
   const useCV = useInfoData();
-  const {
-    cvInfo,
-    setCvInfo,
-    amountOfExperienceFields,
-    setAmounOfExperienceFields,
-    amountOfEducationFields,
-    setAmountOfEducationFields,
-    amountOfProjectFields,
-    setAmountOfProjectFields,
-    amountOfLanguages,
-    setAmountOfLanguages,
-  } = useCV;
+  const { cvInfo, setCvInfo } = useCV;
 
   return {
     cvInfo,
     setCvInfo,
-    amountOfExperienceFields,
-    setAmounOfExperienceFields,
-    amountOfEducationFields,
-    setAmountOfEducationFields,
-    amountOfProjectFields,
-    setAmountOfProjectFields,
-    amountOfLanguages,
-    setAmountOfLanguages,
   };
 };
 

@@ -3,14 +3,23 @@ import PrintButton from "../PrintButton";
 import Fieldset from "./Fieldset";
 import Label from "./Label";
 import Input from "./Input";
-import { Education, Jobs, Projects, ResumeInfo } from "@/src/type";
+import {
+  Certificates,
+  Education,
+  Jobs,
+  Languages,
+  Projects,
+  ResumeInfo,
+} from "@/src/type";
 import useCVInfo from "@/hooks/useCVInfo";
 import "./scrollbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { updateArray } from "../utils/updateArray";
 
 const cvEmptyInfo: ResumeInfo = {
   name: "",
+  pictureUrl: "",
   role: "",
   address: "",
   email: "",
@@ -22,53 +31,67 @@ const cvEmptyInfo: ResumeInfo = {
   education: [],
   experience: [],
   languages: [],
+  skills: [],
+  certificates: [],
 };
 
 const FormMenu = () => {
   const [displayed, setDisplayed] = useState(false);
-  const [opacity, setOpacity] = useState(false);
   const [formCv, setFormCv] = useState(cvEmptyInfo);
   const [education, setEducation] = useState({} as Education);
   const [experience, setExperience] = useState({} as Jobs);
   const [project, setProject] = useState({} as Projects);
+  const [language, setLanguage] = useState({} as Languages);
+  const [certificate, setCertificate] = useState({} as Certificates);
   const { cvInfo, setCvInfo } = useCVInfo();
 
   const updateCVInfo = (newCvInfo: ResumeInfo) => {
+    // first check if new info has empty, undefined, or empty array data, in case of that, replace it for the previous data
     for (const property in newCvInfo) {
-      if (newCvInfo[property] === "") {
+      if (!newCvInfo[property]) {
         newCvInfo[property] = cvInfo[property];
       }
     }
 
-    if (!Object.values(education).every((value) => value === "")) {
-      newCvInfo.education.push(education);
-    }
+    newCvInfo.education.length <= 0 && (newCvInfo.education = cvInfo.education);
+    newCvInfo.experience.length <= 0 &&
+      (newCvInfo.experience = cvInfo.experience);
+    newCvInfo.projects.length <= 0 && (newCvInfo.projects = cvInfo.projects);
+    newCvInfo.languages.length <= 0 && (newCvInfo.languages = cvInfo.languages);
+    newCvInfo.skills.length <= 0 && (newCvInfo.skills = cvInfo.skills);
+    newCvInfo.certificates.length <= 0 &&
+      (newCvInfo.certificates = cvInfo.certificates);
 
-    if (!Object.values(experience).every((value) => value === "")) {
-      newCvInfo.experience.push(experience);
-    }
+    //check if each object has keys in it, and the values are valid to push to array
+    updateArray(education, cvInfo.education, newCvInfo.education);
+    updateArray(experience, cvInfo.experience, newCvInfo.experience);
+    updateArray(project, cvInfo.projects, newCvInfo.projects);
+    updateArray(language, cvInfo.languages, newCvInfo.languages);
+    updateArray(certificate, cvInfo.certificates, newCvInfo.certificates);
 
-    if (!Object.values(project).every((value) => value === "")) {
-      newCvInfo.projects.push(project);
-    }
-
+    //update info in local storage
     setCvInfo(newCvInfo);
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setFormCv(cvEmptyInfo);
     updateCVInfo({ ...formCv });
+    setFormCv(cvEmptyInfo);
+    setEducation({} as Education);
+    setExperience({} as Jobs);
+    setProject({} as Projects);
+    setLanguage({} as Languages);
+    setCertificate({} as Certificates);
   };
 
   return (
     <div
       className={`
-      ${displayed ? "translate-x-[0px]" : "translate-x-[350px]"} ${
-        opacity ? "opacity-100" : "opacity-20"
-      } hideOnPrint formMenu w-[400px] h-[100vh] fixed right-0 top-0 bg-neutral-800 shadow-lg shadow-neutral-900 transition-transform text-white p-4 overflow-auto`}
-      onBlur={() => setOpacity(false)}
-      onFocus={() => setOpacity(true)}
+      ${
+        displayed
+          ? "translate-x-[0px] opacity-100"
+          : "translate-x-[350px] opacity-20"
+      } hideOnPrint formMenu w-[400px] fixed right-0 top-0 bg-neutral-800 shadow-lg shadow-neutral-900 transition-transform text-white p-4 overflow-auto`}
     >
       <div className="w-[100%] p-2">
         <button
@@ -317,6 +340,58 @@ const FormMenu = () => {
           </Label>
         </Fieldset>
 
+        <Fieldset
+          fieldsetLegend="Certificates"
+          fieldsetTitle="Certificates-section"
+        >
+          <Label>
+            Title:
+            <Input
+              value={certificate.title}
+              onChange={(e) => {
+                const newCertificateTitle = e.target.value;
+                setCertificate({ ...certificate, title: newCertificateTitle });
+              }}
+            />
+          </Label>
+
+          <Label>
+            Issuer:
+            <Input
+              value={certificate.issuing_authority}
+              onChange={(e) => {
+                const newIssuer = e.target.value;
+                setCertificate({
+                  ...certificate,
+                  issuing_authority: newIssuer,
+                });
+              }}
+            />
+          </Label>
+
+          <Label>
+            Start Date:
+            <Input
+              value={certificate.start_date}
+              onChange={(e) => {
+                const newStartDate = e.target.value;
+                setCertificate({ ...certificate, start_date: newStartDate });
+              }}
+            />
+          </Label>
+
+          <Label>
+            End Date:
+            <Input
+              value={certificate.end_date}
+              onChange={(e) => {
+                const newEndDate = e.target.value;
+                setCertificate({ ...certificate, end_date: newEndDate });
+              }}
+            />
+          </Label>
+        </Fieldset>
+
         <Fieldset fieldsetLegend="Projects" fieldsetTitle="Projects-section">
           <Label>
             Project name:
@@ -357,14 +432,50 @@ const FormMenu = () => {
           <Label>
             Tags:
             <Input
-              value={project.tags ? project.tags.join(", ") : ""}
+              value={project.tags}
               onChange={(e) => {
-                const tagsArray = e.target.value.split(",");
-                setProject({ ...project, tags: tagsArray });
+                const tags = e.target.value;
+                setProject({ ...project, tags: tags });
               }}
             />
           </Label>
         </Fieldset>
+
+        <Fieldset fieldsetLegend="Languages" fieldsetTitle="Languages-section">
+          <div>
+            <Label>
+              Language name:
+              <Input
+                placeHolder="Eg. Spanish..."
+                value={language.languageName}
+                onChange={(e) => {
+                  const newLanguageName = e.target.value;
+                  setLanguage({ ...language, languageName: newLanguageName });
+                }}
+              />
+            </Label>
+            <Label>
+              Level:
+              <select
+                defaultValue={language.level}
+                onChange={(e) => {
+                  const newLanguageLevel = e.target.value;
+                  setLanguage({ ...language, level: newLanguageLevel });
+                }}
+                className="text-black"
+              >
+                <option value="" hidden>
+                  Select level
+                </option>
+                <option value="Basic">Basic</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Native">Native</option>
+              </select>
+            </Label>
+          </div>
+        </Fieldset>
+
         <div className="p-2 flex gap-2">
           <button
             type="submit"

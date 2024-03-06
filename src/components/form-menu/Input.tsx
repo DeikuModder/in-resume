@@ -5,6 +5,7 @@ type Props = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   ref?: React.LegacyRef<HTMLInputElement>;
+  additionalClass?: string;
 };
 
 const Input: React.FC<Props> = ({
@@ -14,12 +15,13 @@ const Input: React.FC<Props> = ({
   onChange,
   onBlur,
   ref,
+  additionalClass,
 }) => {
   return (
     <input
       type={inputType}
       placeholder={placeHolder}
-      className="px-2 font-light text-xl text-black rounded-lg"
+      className={`px-2 font-light text-xl text-black rounded-lg ${additionalClass}`}
       value={value || ""}
       onChange={onChange}
       onBlur={onBlur}

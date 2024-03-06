@@ -28,9 +28,9 @@ export interface Languages {
 
 export interface Certificates {
   title: string;
+  link: string;
   issuing_authority: string;
-  start_date: string;
-  end_date: string;
+  date: string;
 }
 
 export interface ResumeInfo {

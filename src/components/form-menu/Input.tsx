@@ -4,6 +4,7 @@ type Props = {
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  ref?: React.LegacyRef<HTMLInputElement>;
 };
 
 const Input: React.FC<Props> = ({
@@ -12,6 +13,7 @@ const Input: React.FC<Props> = ({
   value,
   onChange,
   onBlur,
+  ref,
 }) => {
   return (
     <input
@@ -21,6 +23,7 @@ const Input: React.FC<Props> = ({
       value={value || ""}
       onChange={onChange}
       onBlur={onBlur}
+      ref={ref}
     />
   );
 };

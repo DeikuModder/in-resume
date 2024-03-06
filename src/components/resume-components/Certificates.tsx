@@ -25,12 +25,16 @@ const Certificates = () => {
                   key={`education-${index}`}
                 >
                   <div className="flex">
-                    <h3 className="text-lg font-semibold w-[50%]">
-                      {certificate.title}
-                    </h3>
-                    <p className="w-[50%] text-end">
-                      {certificate.start_date}-{certificate.end_date}
-                    </p>
+                    <a
+                      href={certificate.link}
+                      target="_blank"
+                      className="w-[80%]"
+                    >
+                      <h3 className="text-lg font-semibold">
+                        {certificate.title}
+                      </h3>
+                    </a>
+                    <p className="w-[20%] text-end">{certificate.date}</p>
                     <DeleteButton handleDelete={handleDelete} index={index} />
                   </div>
                   <p>{certificate.issuing_authority}</p>

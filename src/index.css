@@ -19,3 +19,15 @@ a:hover {
 #root {
   width: 100%;
 }
+
+button,
+input[type="submit"],
+#picture-button {
+  transition: transform 0.2s ease-in;
+}
+
+button:hover,
+input[type="submit"]:hover,
+#picture-button:hover {
+  transform: scale(1.05);
+}

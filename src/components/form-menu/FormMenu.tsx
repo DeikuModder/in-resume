@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import PrintButton from "../PrintButton";
 import Fieldset from "./Fieldset";
 import Label from "./Label";
@@ -43,7 +43,15 @@ const FormMenu = () => {
   const [project, setProject] = useState({} as Projects);
   const [language, setLanguage] = useState({} as Languages);
   const [certificate, setCertificate] = useState({} as Certificates);
+  const imageInputRef = useRef(null);
   const { cvInfo, setCvInfo } = useCVInfo();
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+
+    setCvInfo({ ...cvInfo, pictureUrl: url });
+  };
 
   const updateCVInfo = (newCvInfo: ResumeInfo) => {
     // first check if new info has empty, undefined, or empty array data, in case of that, replace it for the previous data
@@ -90,8 +98,8 @@ const FormMenu = () => {
       ${
         displayed
           ? "translate-x-[0px] opacity-100"
-          : "translate-x-[350px] opacity-20"
-      } hideOnPrint formMenu w-[400px] h-[100%] fixed right-0 top-0 bg-neutral-800 shadow-lg shadow-neutral-900 transition-transform text-white p-4 overflow-auto`}
+          : "translate-x-[330px] opacity-20"
+      } hideOnPrint formMenu w-[100%] md:w-[400px] h-[100%] fixed right-0 top-0 bg-neutral-800 shadow-lg shadow-neutral-900 transition-transform text-white p-4 overflow-auto`}
     >
       <div className="w-[100%] p-2">
         <button
@@ -115,6 +123,15 @@ const FormMenu = () => {
                 const newName = e.target.value;
                 setFormCv({ ...formCv, name: newName });
               }}
+            />
+          </Label>
+
+          <Label>
+            Picture:
+            <Input
+              inputType="file"
+              ref={imageInputRef}
+              onChange={handleImageUpload}
             />
           </Label>
 
@@ -356,6 +373,18 @@ const FormMenu = () => {
           </Label>
 
           <Label>
+            Link:
+            <Input
+              inputType="url"
+              value={certificate.link}
+              onChange={(e) => {
+                const newCertificateLink = e.target.value;
+                setCertificate({ ...certificate, link: newCertificateLink });
+              }}
+            />
+          </Label>
+
+          <Label>
             Issuer:
             <Input
               value={certificate.issuing_authority}
@@ -370,23 +399,13 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Start Date:
+            Date
             <Input
-              value={certificate.start_date}
+              value={certificate.date}
+              inputType="date"
               onChange={(e) => {
-                const newStartDate = e.target.value;
-                setCertificate({ ...certificate, start_date: newStartDate });
-              }}
-            />
-          </Label>
-
-          <Label>
-            End Date:
-            <Input
-              value={certificate.end_date}
-              onChange={(e) => {
-                const newEndDate = e.target.value;
-                setCertificate({ ...certificate, end_date: newEndDate });
+                const newDate = e.target.value;
+                setCertificate({ ...certificate, date: newDate });
               }}
             />
           </Label>

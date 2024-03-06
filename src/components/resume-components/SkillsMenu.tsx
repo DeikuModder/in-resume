@@ -1,62 +1,10 @@
 import { useState } from "react";
-import Html from "./skills/Html";
-import Css from "./skills/Css";
-import JavaScript from "./skills/JavaScript";
-import React from "./skills/React";
-import TypeScript from "./skills/TypeScript";
-import Electron from "./skills/Electron";
-import Git from "./skills/Git";
-import GitHub from "./skills/GitHub";
-import TailwindCss from "./skills/TailwindCss";
-import Node from "./skills/Node";
-import MySql from "./skills/MySql";
-import PostgressSql from "./skills/PostgressSql";
-import MongoDB from "./skills/MongoDB";
-import Svelte from "./skills/Svelte";
-import Vue from "./skills/Vue";
-import Angular from "./skills/Angular";
-import Python from "./skills/Python";
-import Java from "./skills/Java";
-import Astro from "./skills/Astro";
-import AfterEffects from "./skills/AfterEffects";
-import Figma from "./skills/Figma";
-import Illustrator from "./skills/Illustrator";
-import InDesign from "./skills/InDesign";
-import Lightroom from "./skills/Lightroom";
-import Photoshop from "./skills/Photoshop";
-import Premiere from "./skills/Premiere";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import useCVInfo from "@/hooks/useCVInfo";
+import SkillsObj from "./skills/index";
 
-const SkillsArr = [
-  Html,
-  Css,
-  JavaScript,
-  TypeScript,
-  TailwindCss,
-  React,
-  Angular,
-  Vue,
-  Svelte,
-  Astro,
-  Node,
-  Electron,
-  Git,
-  GitHub,
-  MySql,
-  PostgressSql,
-  MongoDB,
-  Python,
-  Java,
-  AfterEffects,
-  Figma,
-  Illustrator,
-  InDesign,
-  Lightroom,
-  Photoshop,
-  Premiere,
-];
+const keysToStrings = Object.keys(SkillsObj);
 
 const Menu = ({ onClose }: { onClose: () => void }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
@@ -64,21 +12,25 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
   const handleAdd = (name: string) => {
     setCvInfo({ ...cvInfo, skills: [...cvInfo.skills, name] });
   };
-
   return (
     <div className="fixed inset-0 flex justify-center items-center">
-      <div className="w-[400px] h-[500px] bg-neutral-100 rounded-lg shadow-lg shadow-neutral-900">
+      <div className="w-[310px] h-[400px]  md:w-[400px] md:h-[500px] bg-neutral-100 rounded-lg shadow-lg shadow-neutral-900">
         <div className="p-2">
-          <button onClick={onClose}>X</button>
+          <button onClick={onClose} className="font-bold text-2xl">
+            X
+          </button>
         </div>
 
         <div className="overflow-auto h-[80%] p-8 flex flex-col gap-2">
-          {SkillsArr.map((skill) => {
+          {keysToStrings.map((skillName, index) => {
             return (
-              !cvInfo.skills.includes(skill.name) && (
-                <div className="flex items-center gap-2" key={skill.name}>
-                  {skill()}{" "}
-                  <button onClick={() => handleAdd(skill.name)}>
+              !cvInfo.skills.includes(keysToStrings[index]) && (
+                <div
+                  className="flex items-center gap-2"
+                  key={keysToStrings[index]}
+                >
+                  {SkillsObj[skillName]()}{" "}
+                  <button onClick={() => handleAdd(keysToStrings[index])}>
                     <FontAwesomeIcon icon={faPlus} />
                   </button>
                 </div>

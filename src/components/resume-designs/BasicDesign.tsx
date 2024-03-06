@@ -9,7 +9,7 @@ import Certificates from "../resume-components/Certificates";
 
 const BasicDesign = () => {
   return (
-    <div className="w-[800px] p-12">
+    <div className="w-[100%] md:w-[800px] p-12">
       <Hero />
       <AboutMe />
       <Experience />

@@ -99,7 +99,7 @@ const FormMenu = () => {
         displayed
           ? "translate-x-[0px] opacity-100"
           : "translate-x-[310px] opacity-20"
-      } hideOnPrint formMenu w-[100%] md:w-[400px] h-[100%] fixed right-0 top-0 bg-neutral-800 shadow-lg shadow-neutral-900 transition-transform text-white p-4 overflow-auto`}
+      } hideOnPrint formMenu w-[100%] md:w-[400px] h-[100%] fixed right-0 top-0 bg-neutral-800 shadow-lg shadow-neutral-900 transition-transform text-white p-4 overflow-auto -z-0`}
     >
       <div className="w-[100%] p-2">
         <button

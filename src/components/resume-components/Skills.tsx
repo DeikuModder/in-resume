@@ -1,6 +1,6 @@
 import useCVInfo from "@/hooks/useCVInfo";
 import Section from "../Section";
-import SkillsMenu from "./SkillsMenu";
+import SkillsMenu from "./SkillsMenu/SkillsMenu";
 import DeleteButton from "../DeleteButton";
 import SkillsObj from "./skills/index";
 

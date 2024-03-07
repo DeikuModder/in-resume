@@ -2,19 +2,26 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import useCVInfo from "@/hooks/useCVInfo";
-import SkillsObj from "./skills/index";
+import SkillsObj from "../skills/index";
+import "./scrollbar.css";
 
 const keysToStrings = Object.keys(SkillsObj);
 
 const Menu = ({ onClose }: { onClose: () => void }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
+  const [skillSearch, setSkillSearch] = useState("");
+
+  const filteredArr = keysToStrings.filter((skillName) =>
+    skillName.toLocaleLowerCase().includes(skillSearch.toLocaleLowerCase())
+  );
 
   const handleAdd = (name: string) => {
     setCvInfo({ ...cvInfo, skills: [...cvInfo.skills, name] });
   };
+
   return (
-    <div className="fixed inset-0 flex justify-center items-center">
-      <div className="w-[310px] h-[400px]  md:w-[400px] md:h-[500px] bg-neutral-100 rounded-lg shadow-lg shadow-neutral-900">
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+      <div className="hideOnPrint skillsMenu w-[310px] h-[400px] md:w-[400px] md:h-[500px] bg-neutral-100 rounded-lg shadow-lg shadow-neutral-900">
         <div className="p-2">
           <button onClick={onClose} className="font-bold text-2xl">
             X
@@ -22,15 +29,21 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div className="overflow-auto h-[80%] p-8 flex flex-col gap-2">
-          {keysToStrings.map((skillName, index) => {
+          <input
+            className="bg-transparent border-b-2 border-black outline-none text-xl"
+            placeholder="Search skill here"
+            value={skillSearch}
+            onChange={(e) => setSkillSearch(e.target.value)}
+          />
+          {filteredArr.map((skillName, index) => {
             return (
-              !cvInfo.skills.includes(keysToStrings[index]) && (
+              !cvInfo.skills.includes(filteredArr[index]) && (
                 <div
                   className="flex items-center gap-2"
-                  key={keysToStrings[index]}
+                  key={filteredArr[index]}
                 >
                   {SkillsObj[skillName]()}{" "}
-                  <button onClick={() => handleAdd(keysToStrings[index])}>
+                  <button onClick={() => handleAdd(filteredArr[index])}>
                     <FontAwesomeIcon icon={faPlus} />
                   </button>
                 </div>

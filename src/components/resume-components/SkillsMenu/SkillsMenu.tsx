@@ -21,14 +21,14 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
-      <div className="hideOnPrint skillsMenu w-[310px] h-[400px] md:w-[400px] md:h-[500px] bg-neutral-100 rounded-lg shadow-lg shadow-neutral-900">
+      <div className="hideOnPrint w-[310px] h-[400px] md:w-[400px] md:h-[500px] bg-neutral-100 rounded-lg shadow-lg shadow-neutral-900">
         <div className="p-2">
           <button onClick={onClose} className="font-bold text-2xl">
             X
           </button>
         </div>
 
-        <div className="overflow-auto h-[80%] p-8 flex flex-col gap-2">
+        <div className="skillsMenu overflow-auto h-[80%] p-8 flex flex-col gap-2">
           <input
             className="bg-transparent border-b-2 border-black outline-none text-xl"
             placeholder="Search skill here"

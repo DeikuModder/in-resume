@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="hideOnPrint bg-neutral-800 text-neutral-100">
       <div className="p-8 flex flex-col gap-2 justify-center items-center">
-        <div className="flex items-center gap-10">
+        <div className="flex items-center justify-center gap-10">
           <div className="aspect-square w-[50px]">
             <a
               href="https://github.com/DeikuModder/in-resume"

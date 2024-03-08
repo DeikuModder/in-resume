@@ -1,0 +1,92 @@
+{
+  "personal-information": {
+    "title": "Personal Information",
+    "fallback-name": "Your name here",
+    "fallback-role": "Your role here",
+    "fallback-address": "Your address here",
+    "fallback-email": "youremail@mail.com",
+    "fallback-phone": "(123)456-7890"
+  },
+  "about-me": {
+    "title": "About me",
+    "default-text": "(Put a brief description about you here) Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus suscipit cum dolore recusandae. Labore doloremque eligendi sequi accusamus ullam, illum nam debitis nobis? Eveniet, id. Maxime optio quidem velit repellendus."
+  },
+  "experience": {
+    "title": "Experience"
+  },
+  "education": {
+    "title": "Education"
+  },
+  "certificates": {
+    "title": "Certificates"
+  },
+  "projects": {
+    "title": "Projects"
+  },
+  "languages": {
+    "title": "Languages"
+  },
+  "skills": {
+    "title": "Skills"
+  },
+  "form-menu": {
+    "personal-info": {
+      "name-label": "Name",
+      "role-label": "Role",
+      "address-label": "Address",
+      "email-label": "Email",
+      "phone-label": "Phone",
+      "linkedin-label": "LinkedIn",
+      "linkedin-placeholder": "Leave it blank if you don't have a LinkedIn",
+      "github-label": "GitHub",
+      "github-placeholder": "Leave it blank if you don't have a GitHub"
+    },
+    "about-me": {
+      "summary-placeholder": "Brief summary about you"
+    },
+    "placeholder-end-year": "Leave it blank if still on it",
+    "experience": {
+      "company-name-label": "Company Name",
+      "company-link-label": "Company Link",
+      "company-role-label": "Role at company",
+      "summary-label": "Summary",
+      "start-year-label": "Start year",
+      "end-year-label": "End year"
+    },
+    "education": {
+      "institution-name-label": "Institution Name",
+      "title-label": "Title",
+      "start-year-label": "Start year",
+      "end-year-label": "End year"
+    },
+    "certificates": {
+      "title-label": "Title",
+      "link-label": "Link",
+      "issuer-label": "Issuer",
+      "date-label": "Date"
+    },
+    "projects": {
+      "project-name-label": "Project name",
+      "project-link-label": "Link to the project",
+      "description-label": "Description",
+      "tags-label": "Tags"
+    },
+    "languages": {
+      "language-name-label": "Language name",
+      "language-name-placeholder": "Eg. Spanish...",
+      "level-label": "Level",
+      "level-input": "Select level",
+      "level-options": {
+        "basic": "Basic",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "native": "Native"
+      }
+    }
+  },
+  "skill-button": "Add skill +",
+  "save-changes-button": "Save Changes",
+  "print-button": "Print CV",
+  "picture-button": "Upload picture",
+  "search-skill-bar": "Search skill here..."
+}

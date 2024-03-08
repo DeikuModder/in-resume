@@ -1,11 +1,13 @@
 import useCVInfo from "@/hooks/useCVInfo";
 import Section from "../Section";
+import { useTranslation } from "react-i18next";
 
 const AboutMe = () => {
   const { cvInfo } = useCVInfo();
+  const { t } = useTranslation("global");
 
   return (
-    <Section sectionId="about-me-section" sectionTitle="About me">
+    <Section sectionId="about-me-section" sectionTitle={t("about-me.title")}>
       <p>
         {cvInfo.aboutMe
           ? cvInfo.aboutMe

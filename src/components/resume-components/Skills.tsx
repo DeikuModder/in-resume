@@ -3,9 +3,11 @@ import Section from "../Section";
 import SkillsMenu from "./SkillsMenu/SkillsMenu";
 import DeleteButton from "../DeleteButton";
 import SkillsObj from "./skills/index";
+import { useTranslation } from "react-i18next";
 
 const Skills = () => {
   const { cvInfo, setCvInfo } = useCVInfo();
+  const { t } = useTranslation("global");
 
   const handleRemoveSkill = (index: number) => {
     const newCv = { ...cvInfo };
@@ -15,7 +17,7 @@ const Skills = () => {
 
   return (
     <Section
-      sectionTitle="Skills"
+      sectionTitle={t("skills.title")}
       sectionId="skills-section"
       additionClass={`${cvInfo.skills.length <= 0 && "hideOnPrint"}`}
     >

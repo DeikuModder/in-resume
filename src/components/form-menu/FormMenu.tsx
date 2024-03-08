@@ -16,6 +16,7 @@ import "./scrollbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { updateArray } from "../utils/updateArray";
+import { useTranslation } from "react-i18next";
 
 const cvEmptyInfo: ResumeInfo = {
   name: "",
@@ -45,6 +46,7 @@ const FormMenu = () => {
   const [certificate, setCertificate] = useState({} as Certificates);
   const imageInputRef = useRef(null);
   const { cvInfo, setCvInfo } = useCVInfo();
+  const { t } = useTranslation("global");
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -112,11 +114,11 @@ const FormMenu = () => {
 
       <form onSubmit={handleSubmit}>
         <Fieldset
-          fieldsetLegend="Personal information"
+          fieldsetLegend={t("personal-information.title")}
           fieldsetTitle="Personal Info section"
         >
           <Label>
-            Name:
+            {t("form-menu.personal-info.name-label")}
             <Input
               value={formCv.name}
               onChange={(e) => {
@@ -130,7 +132,7 @@ const FormMenu = () => {
             additionalClass="bg-neutral-100 font-bold text-lg text-neutral-900 p-2 rounded-lg w-fit my-4 cursor-pointer"
             id="picture-button"
           >
-            Upload Picture
+            {t("picture-button")}
             <Input
               inputType="file"
               ref={imageInputRef}
@@ -140,7 +142,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Role:
+            {t("form-menu.personal-info.role-label")}
             <Input
               value={formCv.role}
               onChange={(e) => {
@@ -151,7 +153,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Address
+            {t("form-menu.personal-info.address-label")}
             <Input
               value={formCv.address}
               onChange={(e) => {
@@ -162,7 +164,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Email:
+            {t("form-menu.personal-info.email-label")}
             <Input
               inputType="email"
               value={formCv.email}
@@ -174,7 +176,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Phone:
+            {t("form-menu.personal-info.phone-label")}
             <Input
               inputType="tel"
               value={formCv.phone}
@@ -186,10 +188,10 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Linkedin:
+            {t("form-menu.personal-info.linkedin-label")}
             <Input
               inputType="url"
-              placeHolder="Leave it blank if you don't have a Linkedin"
+              placeHolder={t("form-menu.personal-info.linkedin-placeholder")}
               value={formCv.linkedinUrl}
               onChange={(e) => {
                 const newLinkedinUrl = e.target.value;
@@ -199,10 +201,10 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            GitHub:
+            {t("form-menu.personal-info.github-label")}
             <Input
               inputType="url"
-              placeHolder="Leave it blank if you don't have a Github"
+              placeHolder={t("form-menu.personal-info.github-placeholder")}
               value={formCv.gitHubUrl}
               onChange={(e) => {
                 const newGithubUrl = e.target.value;
@@ -212,10 +214,13 @@ const FormMenu = () => {
           </Label>
         </Fieldset>
 
-        <Fieldset fieldsetLegend="About me" fieldsetTitle="About-me-section">
+        <Fieldset
+          fieldsetLegend={t("about-me.title")}
+          fieldsetTitle="About-me-section"
+        >
           <Label>
             <textarea
-              placeholder="Brief summary about you"
+              placeholder={t("form-menu.about-me.summary-placeholder")}
               className="px-2 font-light text-xl text-black rounded-lg"
               rows={4}
               value={formCv.aboutMe}
@@ -228,11 +233,11 @@ const FormMenu = () => {
         </Fieldset>
 
         <Fieldset
-          fieldsetLegend="Experience"
+          fieldsetLegend={t("experience.title")}
           fieldsetTitle="Experience-section"
         >
           <Label>
-            Company Name:
+            {t("form-menu.experience.company-name-label")}
             <Input
               value={experience.company_name}
               onChange={(e) => {
@@ -243,7 +248,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Company Link:
+            {t("form-menu.experience.company-link-label")}
             <Input
               inputType="url"
               value={experience.company_link}
@@ -255,7 +260,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Role at company:
+            {t("form-menu.experience.company-role-label")}
             <Input
               value={experience.role}
               onChange={(e) => {
@@ -266,7 +271,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Summary:
+            {t("form-menu.experience.summary-label")}
             <textarea
               className="px-2 font-light text-xl text-black rounded-lg"
               rows={4}
@@ -279,7 +284,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Start year:
+            {t("form-menu.experience.start-year-label")}
             <Input
               value={experience.start_date}
               onChange={(e) => {
@@ -290,9 +295,9 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            End year:
+            {t("form-menu.experience.start-year-label")}
             <Input
-              placeHolder="Leave it blank if still on it"
+              placeHolder={t("form-menu.placeholder-end-year")}
               value={experience.end_date}
               onChange={(e) => {
                 const newWorkEndDate = e.target.value;
@@ -302,9 +307,12 @@ const FormMenu = () => {
           </Label>
         </Fieldset>
 
-        <Fieldset fieldsetLegend="Education" fieldsetTitle="Education-section">
+        <Fieldset
+          fieldsetLegend={t("education.title")}
+          fieldsetTitle="Education-section"
+        >
           <Label>
-            Institution name:
+            {t("form-menu.education.institution-name-label")}
             <Input
               value={education.institution_name}
               onChange={(e) => {
@@ -318,7 +326,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Title:
+            {t("form-menu.education.title-label")}
             <Input
               value={education.title}
               onChange={(e) => {
@@ -332,7 +340,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Start year:
+            {t("form-menu.education.start-year-label")}
             <Input
               value={education.start_date}
               onChange={(e) => {
@@ -346,9 +354,9 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            End year:
+            {t("form-menu.education.end-year-label")}
             <Input
-              placeHolder="Leave it blank if still on it"
+              placeHolder={t("form-menu.placeholder-end-year")}
               value={education.end_date}
               onChange={(e) => {
                 const newEndDate = e.target.value;
@@ -362,11 +370,11 @@ const FormMenu = () => {
         </Fieldset>
 
         <Fieldset
-          fieldsetLegend="Certificates"
+          fieldsetLegend={t("certificates.title")}
           fieldsetTitle="Certificates-section"
         >
           <Label>
-            Title:
+            {t("form-menu.certificates.title-label")}
             <Input
               value={certificate.title}
               onChange={(e) => {
@@ -377,7 +385,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Link:
+            {t("form-menu.certificates.link-label")}
             <Input
               inputType="url"
               value={certificate.link}
@@ -389,7 +397,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Issuer:
+            {t("form-menu.certificates.issuer-label")}
             <Input
               value={certificate.issuing_authority}
               onChange={(e) => {
@@ -403,7 +411,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Date
+            {t("form-menu.certificates.date-label")}
             <Input
               value={certificate.date}
               inputType="date"
@@ -415,9 +423,12 @@ const FormMenu = () => {
           </Label>
         </Fieldset>
 
-        <Fieldset fieldsetLegend="Projects" fieldsetTitle="Projects-section">
+        <Fieldset
+          fieldsetLegend={t("projects.title")}
+          fieldsetTitle="Projects-section"
+        >
           <Label>
-            Project name:
+            {t("form-menu.projects.project-name-label")}
             <Input
               value={project.project_name}
               onChange={(e) => {
@@ -428,7 +439,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Link to the project:
+            {t("form-menu.projects.project-link-label")}
             <Input
               inputType="url"
               value={project.project_link}
@@ -440,7 +451,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Description:
+            {t("form-menu.projects.description-label")}
             <textarea
               className="px-2 font-light text-xl text-black rounded-lg"
               rows={3}
@@ -453,7 +464,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            Tags:
+            {t("form-menu.projects.tags-label")}
             <Input
               value={project.tags}
               onChange={(e) => {
@@ -464,12 +475,15 @@ const FormMenu = () => {
           </Label>
         </Fieldset>
 
-        <Fieldset fieldsetLegend="Languages" fieldsetTitle="Languages-section">
+        <Fieldset
+          fieldsetLegend={t("languages.title")}
+          fieldsetTitle="Languages-section"
+        >
           <div>
             <Label>
-              Language name:
+              {t("form-menu.languages.language-name-label")}
               <Input
-                placeHolder="Eg. Spanish..."
+                placeHolder={t("form-menu.languages.language-name-placeholder")}
                 value={language.languageName}
                 onChange={(e) => {
                   const newLanguageName = e.target.value;
@@ -477,8 +491,9 @@ const FormMenu = () => {
                 }}
               />
             </Label>
+
             <Label>
-              Level:
+              {t("form-menu.languages.level-label")}
               <select
                 defaultValue={language.level}
                 onChange={(e) => {
@@ -488,12 +503,22 @@ const FormMenu = () => {
                 className="text-black"
               >
                 <option value="" hidden>
-                  Select level
+                  {t("form-menu.languages.level-input")}
                 </option>
-                <option value="Basic">Basic</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-                <option value="Native">Native</option>
+                <option value={t("form-menu.languages.level-options.basic")}>
+                  {t("form-menu.languages.level-options.basic")}
+                </option>
+                <option
+                  value={t("form-menu.languages.level-options.intermediate")}
+                >
+                  {t("form-menu.languages.level-options.intermediate")}
+                </option>
+                <option value={t("form-menu.languages.level-options.advanced")}>
+                  {t("form-menu.languages.level-options.advanced")}
+                </option>
+                <option value={t("form-menu.languages.level-options.native")}>
+                  {t("form-menu.languages.level-options.native")}
+                </option>
               </select>
             </Label>
           </div>
@@ -504,7 +529,7 @@ const FormMenu = () => {
             type="submit"
             className="bg-neutral-100 font-bold text-lg text-neutral-900 p-2 rounded-lg"
           >
-            Update
+            {t("save-changes-button")}
           </button>
           <PrintButton />
         </div>

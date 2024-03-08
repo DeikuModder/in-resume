@@ -1,9 +1,11 @@
 import useCVInfo from "@/hooks/useCVInfo";
 import Section from "../Section";
 import DeleteButton from "../DeleteButton";
+import { useTranslation } from "react-i18next";
 
 const Projects = () => {
   const { cvInfo, setCvInfo } = useCVInfo();
+  const { t } = useTranslation("global");
 
   const handleDelete = (index: number) => {
     const newCv = { ...cvInfo };
@@ -16,7 +18,10 @@ const Projects = () => {
       {cvInfo.projects.length <= 0 ? (
         <></>
       ) : (
-        <Section sectionTitle="Projects" sectionId="projects-section">
+        <Section
+          sectionTitle={t("projects.title")}
+          sectionId="projects-section"
+        >
           <ul className=" inline-flex flex-wrap gap-4 list-none">
             {cvInfo.projects.map((project, index) => {
               return (

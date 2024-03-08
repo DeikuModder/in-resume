@@ -1,9 +1,11 @@
 import useCVInfo from "@/hooks/useCVInfo";
 import Section from "../Section";
 import DeleteButton from "../DeleteButton";
+import { useTranslation } from "react-i18next";
 
 const Education = () => {
   const { cvInfo, setCvInfo } = useCVInfo();
+  const { t } = useTranslation("global");
 
   const handleDelete = (index: number) => {
     const newCv = { ...cvInfo };
@@ -16,7 +18,10 @@ const Education = () => {
       {cvInfo.education.length <= 0 ? (
         <></>
       ) : (
-        <Section sectionTitle="Education" sectionId="education-section">
+        <Section
+          sectionTitle={t("education.title")}
+          sectionId="education-section"
+        >
           <ul>
             {cvInfo.education.map((insitution, index) => {
               return (

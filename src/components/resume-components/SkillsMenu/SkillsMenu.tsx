@@ -4,12 +4,14 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import useCVInfo from "@/hooks/useCVInfo";
 import SkillsObj from "../skills/index";
 import "./scrollbar.css";
+import { useTranslation } from "react-i18next";
 
 const keysToStrings = Object.keys(SkillsObj);
 
 const Menu = ({ onClose }: { onClose: () => void }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const [skillSearch, setSkillSearch] = useState("");
+  const { t } = useTranslation("global");
 
   const filteredArr = keysToStrings.filter((skillName) =>
     skillName.toLocaleLowerCase().includes(skillSearch.toLocaleLowerCase())
@@ -31,7 +33,7 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
         <div className="overflow-auto h-[80%] p-8 flex flex-col gap-2">
           <input
             className="bg-transparent border-b-2 border-black outline-none text-xl"
-            placeholder="Search skill here"
+            placeholder={t("search-skill-bar")}
             value={skillSearch}
             onChange={(e) => setSkillSearch(e.target.value)}
           />
@@ -58,6 +60,7 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
 
 const SkillsMenu = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const { t } = useTranslation("global");
 
   return (
     <>
@@ -68,7 +71,7 @@ const SkillsMenu = () => {
           onClick={() => setOpenMenu(true)}
           className="hideOnPrint h-fit w-fit border border-neutral-700 rounded-xl p-2 bg-neutral-300 text-neutral-700 font-bold"
         >
-          Add skill +
+          {t("skill-button")}
         </button>
       )}
     </>

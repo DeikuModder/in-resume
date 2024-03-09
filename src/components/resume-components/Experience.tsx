@@ -40,7 +40,8 @@ const Experience = () => {
                       </h3>
                     </a>
                     <p className="w-[50%] text-end">
-                      {work.start_date}-{work.end_date ? work.end_date : "Now"}
+                      {work.start_date}-
+                      {work.end_date ? work.end_date : t("end-date-fallback")}
                     </p>
                     <DeleteButton handleDelete={handleDelete} index={index} />
                   </div>

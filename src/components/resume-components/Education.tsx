@@ -35,7 +35,9 @@ const Education = () => {
                     </h3>
                     <p className="w-[50%] text-end">
                       {insitution.start_date}-
-                      {insitution.end_date ? insitution.end_date : "Now"}
+                      {insitution.end_date
+                        ? insitution.end_date
+                        : t("end-date-fallback")}
                     </p>
                     <DeleteButton handleDelete={handleDelete} index={index} />
                   </div>

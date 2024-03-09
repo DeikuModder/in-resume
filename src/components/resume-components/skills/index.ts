@@ -24,6 +24,18 @@ import TypeScript from "./TypeScript";
 import Vue from "./Vue";
 import React from "./React";
 import Node from "./Node";
+import CLanguage from "./CLanguage";
+import CPlusPlus from "./CPlusPlus";
+import CSharp from "./CSharp";
+import Cobol from "./Cobol";
+import Rust from "./Rust";
+import Redis from "./Redis";
+import Supabase from "./Supabase";
+import Php from "./Php";
+import Spring from "./Spring";
+import Excel from "./Excel";
+import Word from "./Word";
+import PowerPoint from "./PowerPoint";
 
 const SkillsObj = {
   Html,
@@ -45,6 +57,15 @@ const SkillsObj = {
   MongoDB,
   Python,
   Java,
+  CLanguage,
+  CPlusPlus,
+  CSharp,
+  Cobol,
+  Rust,
+  Redis,
+  Supabase,
+  Php,
+  Spring,
   AfterEffects,
   Figma,
   Illustrator,
@@ -52,6 +73,9 @@ const SkillsObj = {
   Lightroom,
   Photoshop,
   Premiere,
+  Excel,
+  Word,
+  PowerPoint,
 };
 
 export default SkillsObj;

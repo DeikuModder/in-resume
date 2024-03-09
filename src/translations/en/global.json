@@ -88,5 +88,6 @@
   "save-changes-button": "Save Changes",
   "print-button": "Print CV",
   "picture-button": "Upload picture",
-  "search-skill-bar": "Search skill here..."
+  "search-skill-bar": "Search skill here...",
+  "end-date-fallback": "Now"
 }

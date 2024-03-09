@@ -88,5 +88,6 @@
   "save-changes-button": "Guardar Cambios",
   "print-button": "Imprimir",
   "picture-button": "Subir foto",
-  "search-skill-bar": "Busca una habilidad..."
+  "search-skill-bar": "Busca una habilidad...",
+  "end-date-fallback": "Actualidad"
 }

@@ -9,13 +9,21 @@ import Certificates from "../resume-components/Certificates";
 
 const BasicDesign = () => {
   return (
-    <div className="w-[100%] md:w-[800px] p-12">
+    <div className="sm:w-[800px] p-12">
       <Hero />
       <AboutMe />
       <Experience />
-      <Education />
-      <Certificates />
-      <Language />
+      <Education
+        titleOrientation="flex-row"
+        border={true}
+        orientation="flex-col"
+      />
+      <Certificates
+        titleOrientation="flex-row"
+        border={true}
+        orientation="flex-col"
+      />
+      <Language border={true} />
       <Projects />
       <Skills />
     </div>

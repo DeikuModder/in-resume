@@ -3,7 +3,7 @@ import Section from "../Section";
 import DeleteButton from "../DeleteButton";
 import { useTranslation } from "react-i18next";
 
-const Language = () => {
+const Language = ({ border }: { border?: boolean }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
@@ -26,7 +26,9 @@ const Language = () => {
             {cvInfo.languages.map((language, index) => {
               return (
                 <li
-                  className="mb-2 border border-neutral-500 p-2 w-[120px] rounded-lg"
+                  className={`mb-2 ${
+                    border && "border border-neutral-500"
+                  } p-2 w-[120px] rounded-lg`}
                   key={`Language-${index}`}
                 >
                   <div className="flex gap-2">

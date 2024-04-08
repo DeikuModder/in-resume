@@ -89,5 +89,6 @@
   "print-button": "Print CV",
   "picture-button": "Upload picture",
   "search-skill-bar": "Search skill here...",
-  "end-date-fallback": "Now"
+  "end-date-fallback": "Now",
+  "contact": "Contact"
 }

@@ -50,3 +50,9 @@ export interface ResumeInfo {
   skills: string[];
   certificates: Certificates[];
 }
+
+export type Orientation =
+  | "flex-col"
+  | "flex-row"
+  | "flex-row-reverse"
+  | "flex-col-reverse";

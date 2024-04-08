@@ -1,11 +1,13 @@
 import Logo from "@/assets/logo curriculum.webp";
 import { useTranslation } from "react-i18next";
+import DesignsMenu from "./DesignsMenu";
 
 const Header = () => {
   const { i18n } = useTranslation("global");
 
   return (
     <header className="bg-neutral-900 text-white h-[75px] w-[100%] flex justify-center items-center hideOnPrint">
+      <DesignsMenu />
       <div className="w-[50px] md:w-[5%]">
         <img src={Logo} className="w-[100%]" />
       </div>

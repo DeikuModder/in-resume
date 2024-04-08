@@ -7,6 +7,8 @@ export const InfoContext = React.createContext({} as ReturnType<typeof useCV>);
 type useCVReturnType = {
   cvInfo: ResumeInfo;
   setCvInfo: (cvObj: ResumeInfo) => void;
+  design: number;
+  setDesign: (designNumber: number) => void;
 };
 
 const useCV = (): useCVReturnType => {
@@ -29,9 +31,12 @@ const useCV = (): useCVReturnType => {
   };
 
   const [cvInfo, setCvInfo] = useLocalStorage("cvInfo", cvEmptyInfo);
+  const [design, setDesign] = useLocalStorage("design", 0);
   return {
     cvInfo,
     setCvInfo,
+    design,
+    setDesign,
   };
 };
 

@@ -21,7 +21,7 @@ const AltDesign = () => {
   return (
     <div className="w-[100%] flex min-h-[100dvh] sm:w-[1000px]">
       <div className="w-[35%] bg-blue-950 p-12 text-neutral-50">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center mb-4">
           {cvInfo?.pictureUrl && (
             <figure className="w-[200px]">
               <img

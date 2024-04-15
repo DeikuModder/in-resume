@@ -11,9 +11,11 @@ import { useTranslation } from "react-i18next";
 const Contact = ({
   title,
   orientation,
+  font,
 }: {
   title?: boolean;
   orientation?: Orientation;
+  font?: string;
 }) => {
   const { cvInfo } = useCVInfo();
   const { t } = useTranslation("global");
@@ -21,7 +23,7 @@ const Contact = ({
   return (
     <section>
       {title && <h3 className="text-2xl font-bold">{t("contact")}</h3>}
-      <ul className={`p-2 list-none gap-3 text-sm flex ${orientation}`}>
+      <ul className={`p-2 list-none gap-3 ${font} flex ${orientation}`}>
         <li>
           <FontAwesomeIcon icon={faPhone} />{" "}
           {cvInfo.phone

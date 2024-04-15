@@ -15,7 +15,7 @@ const Hero = () => {
     <header className="mb-4 flex justify-between" id="hero-header">
       <div className="flex flex-col">
         <Title orientation="flex-col" />
-        <Contact />
+        <Contact font="text-sm" />
       </div>
       {cvInfo?.pictureUrl && (
         <figure>

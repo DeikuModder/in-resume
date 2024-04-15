@@ -40,7 +40,7 @@ const AltDesign = () => {
         </div>
 
         <div className="border-b-2 border-neutral-500 border-dashed mb-4">
-          <Contact title={true} orientation="flex-col" />
+          <Contact title={true} orientation="flex-col" font="text-md" />
         </div>
 
         <div className="border-b-2 border-neutral-500 border-dashed mb-4">
@@ -49,10 +49,6 @@ const AltDesign = () => {
 
         <div className="border-b-2 border-neutral-500 border-dashed mb-4">
           <Certificates orientation="flex-col" titleOrientation="flex-col" />
-        </div>
-
-        <div className="border-b-2 border-neutral-500 border-dashed mb-4">
-          <Language />
         </div>
       </div>
       <div className="w-[65%] pt-12">
@@ -64,6 +60,7 @@ const AltDesign = () => {
           <AboutMe />
           <Projects />
           <Experience />
+          <Language />
           <Skills />
         </div>
       </div>

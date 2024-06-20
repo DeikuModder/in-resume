@@ -26,7 +26,7 @@ const Projects = () => {
             {cvInfo.projects.map((project, index) => {
               return (
                 <li
-                  className="mb-8 border border-neutral-500 rounded-lg p-2 w-[200px] flex flex-col gap-2"
+                  className="mb-8 rounded-lg w-[200px] flex flex-col gap-2"
                   key={`project-${index}`}
                 >
                   <div className="flex">

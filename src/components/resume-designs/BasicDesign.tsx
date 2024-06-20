@@ -13,17 +13,9 @@ const BasicDesign = () => {
       <Hero />
       <AboutMe />
       <Experience />
-      <Education
-        titleOrientation="flex-row"
-        border={true}
-        orientation="flex-col"
-      />
-      <Certificates
-        titleOrientation="flex-row"
-        border={true}
-        orientation="flex-col"
-      />
-      <Language border={true} />
+      <Education titleOrientation="flex-row" orientation="flex-col" />
+      <Certificates titleOrientation="flex-row" orientation="flex-col" />
+      <Language />
       <Projects />
       <Skills />
     </div>

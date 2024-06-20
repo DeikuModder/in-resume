@@ -27,8 +27,8 @@ const Language = ({ border }: { border?: boolean }) => {
               return (
                 <li
                   className={`mb-2 ${
-                    border && "border border-neutral-500"
-                  } p-2 w-[120px] rounded-lg`}
+                    border && "border border-neutral-500 p-2"
+                  } w-[120px] rounded-lg`}
                   key={`Language-${index}`}
                 >
                   <div className="flex gap-2">

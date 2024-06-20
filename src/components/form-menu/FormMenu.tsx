@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import PrintButton from "../PrintButton";
 import Fieldset from "./Fieldset";
 import Label from "./Label";
@@ -17,24 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { updateArray } from "../utils/updateArray";
 import { useTranslation } from "react-i18next";
-
-const cvEmptyInfo: ResumeInfo = {
-  name: "",
-  pictureUrl: "",
-  role: "",
-  address: "",
-  email: "",
-  phone: "",
-  linkedinUrl: "",
-  gitHubUrl: "",
-  aboutMe: "",
-  projects: [],
-  education: [],
-  experience: [],
-  languages: [],
-  skills: [],
-  certificates: [],
-};
+import cvEmptyInfo from "@/utils/cvEmpty";
 
 const FormMenu = () => {
   const [displayed, setDisplayed] = useState(false);
@@ -94,6 +77,15 @@ const FormMenu = () => {
     setCertificate({} as Certificates);
   };
 
+  const handleInputChange = (field: string) => {
+    return (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormCv((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+    };
+  };
+
   return (
     <div
       className={`
@@ -119,13 +111,7 @@ const FormMenu = () => {
         >
           <Label>
             {t("form-menu.personal-info.name-label")}
-            <Input
-              value={formCv.name}
-              onChange={(e) => {
-                const newName = e.target.value;
-                setFormCv({ ...formCv, name: newName });
-              }}
-            />
+            <Input value={formCv.name} onChange={handleInputChange("name")} />
           </Label>
 
           <Label
@@ -143,23 +129,14 @@ const FormMenu = () => {
 
           <Label>
             {t("form-menu.personal-info.role-label")}
-            <Input
-              value={formCv.role}
-              onChange={(e) => {
-                const newRole = e.target.value;
-                setFormCv({ ...formCv, role: newRole });
-              }}
-            />
+            <Input value={formCv.role} onChange={handleInputChange("role")} />
           </Label>
 
           <Label>
             {t("form-menu.personal-info.address-label")}
             <Input
               value={formCv.address}
-              onChange={(e) => {
-                const newAddress = e.target.value;
-                setFormCv({ ...formCv, address: newAddress });
-              }}
+              onChange={handleInputChange("address")}
             />
           </Label>
 
@@ -168,10 +145,7 @@ const FormMenu = () => {
             <Input
               inputType="email"
               value={formCv.email}
-              onChange={(e) => {
-                const newEmail = e.target.value;
-                setFormCv({ ...formCv, email: newEmail });
-              }}
+              onChange={handleInputChange("email")}
             />
           </Label>
 
@@ -180,10 +154,7 @@ const FormMenu = () => {
             <Input
               inputType="tel"
               value={formCv.phone}
-              onChange={(e) => {
-                const newPhone = e.target.value;
-                setFormCv({ ...formCv, phone: newPhone });
-              }}
+              onChange={handleInputChange("phone")}
             />
           </Label>
 
@@ -193,10 +164,7 @@ const FormMenu = () => {
               inputType="url"
               placeHolder={t("form-menu.personal-info.linkedin-placeholder")}
               value={formCv.linkedinUrl}
-              onChange={(e) => {
-                const newLinkedinUrl = e.target.value;
-                setFormCv({ ...formCv, linkedinUrl: newLinkedinUrl });
-              }}
+              onChange={handleInputChange("linkedinUrl")}
             />
           </Label>
 
@@ -206,10 +174,7 @@ const FormMenu = () => {
               inputType="url"
               placeHolder={t("form-menu.personal-info.github-placeholder")}
               value={formCv.gitHubUrl}
-              onChange={(e) => {
-                const newGithubUrl = e.target.value;
-                setFormCv({ ...formCv, gitHubUrl: newGithubUrl });
-              }}
+              onChange={handleInputChange("gitHubUrl")}
             />
           </Label>
         </Fieldset>
@@ -224,10 +189,7 @@ const FormMenu = () => {
               className="px-2 font-light text-xl text-black rounded-lg"
               rows={4}
               value={formCv.aboutMe}
-              onChange={(e) => {
-                const newSummary = e.target.value;
-                setFormCv({ ...formCv, aboutMe: newSummary });
-              }}
+              onChange={handleInputChange("aboutMe")}
             />
           </Label>
         </Fieldset>

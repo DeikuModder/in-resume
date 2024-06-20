@@ -36,8 +36,8 @@ const Education = ({
               return (
                 <li
                   className={`mb-8 ${
-                    border && "border border-neutral-500"
-                  } rounded-lg p-2 flex ${orientation}`}
+                    border && "border border-neutral-500 p-2"
+                  } rounded-lg flex ${orientation}`}
                   key={`education-${index}`}
                 >
                   <div className={`flex ${titleOrientation}`}>

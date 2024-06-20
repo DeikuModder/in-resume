@@ -25,10 +25,7 @@ const Experience = () => {
           <ul>
             {cvInfo.experience.map((work, index) => {
               return (
-                <li
-                  className="mb-8 border border-neutral-500 rounded-lg p-2"
-                  key={`experience-${index}`}
-                >
+                <li className="mb-8 rounded-lg" key={`experience-${index}`}>
                   <div className="flex">
                     <a
                       href={work.company_link}

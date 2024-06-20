@@ -12,7 +12,8 @@ body {
   min-height: 100dvh;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -53,4 +54,11 @@ button:hover,
 input[type="submit"]:hover,
 #picture-button:hover {
   transform: scale(1.05);
+}
+
+input,
+button,
+textarea,
+select {
+  outline: none;
 }

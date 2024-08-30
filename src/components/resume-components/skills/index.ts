@@ -36,6 +36,7 @@ import Spring from "./Spring";
 import Excel from "./Excel";
 import Word from "./Word";
 import PowerPoint from "./PowerPoint";
+import Tauri from "./Tauri";
 
 const SkillsObj = {
   Html,
@@ -76,6 +77,7 @@ const SkillsObj = {
   Excel,
   Word,
   PowerPoint,
+  Tauri,
 };
 
 export default SkillsObj;

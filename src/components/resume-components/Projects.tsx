@@ -26,7 +26,7 @@ const Projects = () => {
             {cvInfo.projects.map((project, index) => {
               return (
                 <li
-                  className="mb-8 rounded-lg w-[200px] flex flex-col gap-2"
+                  className="mb-8 rounded-lg w-[200px] flex flex-col justify-between gap-2"
                   key={`project-${index}`}
                 >
                   <div className="flex">
@@ -39,7 +39,7 @@ const Projects = () => {
                   </div>
                   <p>{project.description}</p>
                   <div className="flex gap-2">
-                    <p className="bg-neutral-300 w-fit p-1 rounded-lg">
+                    <p className="bg-neutral-300 min-h-[55px] p-1 rounded-lg">
                       {project.tags}
                     </p>
                   </div>

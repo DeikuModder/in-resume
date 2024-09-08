@@ -6,6 +6,7 @@ import Language from "../resume-components/Language";
 import Projects from "../resume-components/Projects";
 import Skills from "../resume-components/Skills";
 import Certificates from "../resume-components/Certificates";
+import SoftSkills from "../resume-components/SoftSkills";
 
 const BasicDesign = () => {
   return (
@@ -17,6 +18,7 @@ const BasicDesign = () => {
       <Certificates titleOrientation="flex-row" orientation="flex-col" />
       <Language />
       <Projects />
+      <SoftSkills orientation="flex-col" />
       <Skills />
     </div>
   );

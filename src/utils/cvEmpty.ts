@@ -15,6 +15,7 @@ const cvEmptyInfo: ResumeInfo = {
   experience: [],
   languages: [],
   skills: [],
+  softSkills: [],
   certificates: [],
 };
 

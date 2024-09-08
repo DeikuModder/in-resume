@@ -27,6 +27,7 @@ const useCV = (): useCVReturnType => {
     experience: [],
     languages: [],
     skills: [],
+    softSkills: [],
     certificates: [],
   };
 

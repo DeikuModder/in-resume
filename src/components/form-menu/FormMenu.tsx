@@ -10,6 +10,7 @@ import {
   Languages,
   Projects,
   ResumeInfo,
+  SoftSkill,
 } from "@/src/type";
 import useCVInfo from "@/hooks/useCVInfo";
 import "./scrollbar.css";
@@ -18,6 +19,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { updateArray } from "../utils/updateArray";
 import { useTranslation } from "react-i18next";
 import cvEmptyInfo from "@/utils/cvEmpty";
+import { checkArray } from "../utils/checkArray";
 
 const FormMenu = () => {
   const [displayed, setDisplayed] = useState(false);
@@ -27,6 +29,7 @@ const FormMenu = () => {
   const [project, setProject] = useState({} as Projects);
   const [language, setLanguage] = useState({} as Languages);
   const [certificate, setCertificate] = useState({} as Certificates);
+  const [softSkill, setSoftSkill] = useState({} as SoftSkill);
   const imageInputRef = useRef(null);
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
@@ -39,6 +42,11 @@ const FormMenu = () => {
   };
 
   const updateCVInfo = (newCvInfo: ResumeInfo) => {
+    //todo: make this a better general funcion for checking if the local storage data lacks new info
+    if (!cvInfo.softSkills) {
+      setCvInfo({ ...cvInfo, softSkills: [] });
+    }
+
     // first check if new info has empty, undefined, or empty array data, in case of that, replace it for the previous data
     for (const property in newCvInfo) {
       if (!newCvInfo[property]) {
@@ -46,14 +54,16 @@ const FormMenu = () => {
       }
     }
 
-    newCvInfo.education.length <= 0 && (newCvInfo.education = cvInfo.education);
-    newCvInfo.experience.length <= 0 &&
-      (newCvInfo.experience = cvInfo.experience);
-    newCvInfo.projects.length <= 0 && (newCvInfo.projects = cvInfo.projects);
-    newCvInfo.languages.length <= 0 && (newCvInfo.languages = cvInfo.languages);
-    newCvInfo.skills.length <= 0 && (newCvInfo.skills = cvInfo.skills);
-    newCvInfo.certificates.length <= 0 &&
-      (newCvInfo.certificates = cvInfo.certificates);
+    newCvInfo.education = checkArray(newCvInfo.education, cvInfo.education);
+    newCvInfo.experience = checkArray(newCvInfo.experience, cvInfo.experience);
+    newCvInfo.projects = checkArray(newCvInfo.projects, cvInfo.projects);
+    newCvInfo.languages = checkArray(newCvInfo.languages, cvInfo.languages);
+    newCvInfo.skills = checkArray(newCvInfo.skills, cvInfo.skills);
+    newCvInfo.certificates = checkArray(
+      newCvInfo.certificates,
+      cvInfo.certificates
+    );
+    newCvInfo.softSkills = checkArray(newCvInfo.softSkills, cvInfo.softSkills);
 
     //check if each object has keys in it, and the values are valid to push to array
     updateArray(education, cvInfo.education, newCvInfo.education);
@@ -61,6 +71,7 @@ const FormMenu = () => {
     updateArray(project, cvInfo.projects, newCvInfo.projects);
     updateArray(language, cvInfo.languages, newCvInfo.languages);
     updateArray(certificate, cvInfo.certificates, newCvInfo.certificates);
+    updateArray(softSkill, cvInfo.softSkills, newCvInfo.softSkills);
 
     //update info in local storage
     setCvInfo(newCvInfo);
@@ -75,6 +86,7 @@ const FormMenu = () => {
     setProject({} as Projects);
     setLanguage({} as Languages);
     setCertificate({} as Certificates);
+    setSoftSkill({} as SoftSkill);
   };
 
   const handleInputChange = (field: string) => {
@@ -482,6 +494,33 @@ const FormMenu = () => {
                   {t("form-menu.languages.level-options.native")}
                 </option>
               </select>
+            </Label>
+          </div>
+        </Fieldset>
+
+        <Fieldset
+          fieldsetLegend={t("soft-skills.title")}
+          fieldsetTitle="Soft-skills-section"
+        >
+          <div>
+            <Label>
+              {t("form-menu.soft-skills.name-label")}
+              <Input
+                value={softSkill.name}
+                onChange={(e) =>
+                  setSoftSkill({ ...softSkill, name: e.target.value })
+                }
+              />
+            </Label>
+
+            <Label>
+              {t("form-menu.soft-skills.description-label")}
+              <Input
+                value={softSkill.description}
+                onChange={(e) =>
+                  setSoftSkill({ ...softSkill, description: e.target.value })
+                }
+              />
             </Label>
           </div>
         </Fieldset>

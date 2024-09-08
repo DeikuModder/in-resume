@@ -48,7 +48,13 @@ export interface ResumeInfo {
   experience: Jobs[];
   languages: Languages[];
   skills: string[];
+  softSkills: SoftSkill[];
   certificates: Certificates[];
+}
+
+export interface SoftSkill {
+  name: string;
+  description: string;
 }
 
 export type Orientation =

@@ -10,6 +10,7 @@ import Certificates from "../resume-components/Certificates";
 import Language from "../resume-components/Language";
 import Title from "../resume-components/Title";
 import Projects from "../resume-components/Projects";
+import SoftSkills from "../resume-components/SoftSkills";
 
 const AltDesign = () => {
   const { cvInfo, setCvInfo } = useCVInfo();
@@ -49,6 +50,10 @@ const AltDesign = () => {
 
         <div className="border-b-2 border-neutral-500 border-dashed mb-4">
           <Certificates orientation="flex-col" titleOrientation="flex-col" />
+        </div>
+
+        <div className="border-b-2 border-neutral-500 border-dashed mb-4">
+          <SoftSkills orientation="flex-col" titleOrientation="flex-col" />
         </div>
       </div>
       <div className="w-[65%] pt-12">

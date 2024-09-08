@@ -26,8 +26,11 @@
   "languages": {
     "title": "Languages"
   },
+  "soft-skills": {
+    "title": "Soft Skills"
+  },
   "skills": {
-    "title": "Skills"
+    "title": "Tech-stack"
   },
   "form-menu": {
     "personal-info": {
@@ -82,13 +85,17 @@
         "advanced": "Advanced",
         "native": "Native"
       }
+    },
+    "soft-skills": {
+      "name-label": "Title",
+      "description-label": "Description"
     }
   },
-  "skill-button": "Add skill +",
+  "skill-button": "Add technology +",
   "save-changes-button": "Save Changes",
   "print-button": "Print CV",
   "picture-button": "Upload picture",
-  "search-skill-bar": "Search skill here...",
+  "search-skill-bar": "Search technology here...",
   "end-date-fallback": "Now",
   "contact": "Contact"
 }

@@ -173,7 +173,6 @@ const FormMenu = () => {
           <Label>
             {t("form-menu.personal-info.linkedin-label")}
             <Input
-              inputType="url"
               placeHolder={t("form-menu.personal-info.linkedin-placeholder")}
               value={formCv.linkedinUrl}
               onChange={handleInputChange("linkedinUrl")}
@@ -183,7 +182,6 @@ const FormMenu = () => {
           <Label>
             {t("form-menu.personal-info.github-label")}
             <Input
-              inputType="url"
               placeHolder={t("form-menu.personal-info.github-placeholder")}
               value={formCv.gitHubUrl}
               onChange={handleInputChange("gitHubUrl")}

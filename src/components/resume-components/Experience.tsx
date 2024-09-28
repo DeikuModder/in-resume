@@ -42,8 +42,8 @@ const Experience = () => {
                     </p>
                     <DeleteButton handleDelete={handleDelete} index={index} />
                   </div>
+                  <p className="font-semibold">{work.role}</p>
                   <p>{work.summary}</p>
-                  <p>{work.role}</p>
                 </li>
               );
             })}

@@ -39,9 +39,9 @@
       "address-label": "Address",
       "email-label": "Email",
       "phone-label": "Phone",
-      "linkedin-label": "LinkedIn",
+      "linkedin-label": "LinkedIn username",
       "linkedin-placeholder": "Leave it blank if you don't have a LinkedIn",
-      "github-label": "GitHub",
+      "github-label": "GitHub username",
       "github-placeholder": "Leave it blank if you don't have a GitHub"
     },
     "about-me": {

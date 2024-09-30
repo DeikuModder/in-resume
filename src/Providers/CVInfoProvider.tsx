@@ -20,6 +20,8 @@ const useCV = (): useCVReturnType => {
     email: "",
     phone: "",
     linkedinUrl: "",
+    linkedinUser: "",
+    gitHubUser: "",
     gitHubUrl: "",
     aboutMe: "",
     projects: [],

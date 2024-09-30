@@ -40,8 +40,10 @@
       "email-label": "Email",
       "phone-label": "Phone",
       "linkedin-label": "LinkedIn username",
+      "linkedin-url-label": "URL of your LinkedIn",
       "linkedin-placeholder": "Leave it blank if you don't have a LinkedIn",
       "github-label": "GitHub username",
+      "github-url-label": "URL of your GitHub",
       "github-placeholder": "Leave it blank if you don't have a GitHub"
     },
     "about-me": {

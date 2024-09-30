@@ -174,6 +174,15 @@ const FormMenu = () => {
             {t("form-menu.personal-info.linkedin-label")}
             <Input
               placeHolder={t("form-menu.personal-info.linkedin-placeholder")}
+              value={formCv.linkedinUser}
+              onChange={handleInputChange("linkedinUser")}
+            />
+          </Label>
+
+          <Label>
+            {t("form-menu.personal-info.linkedin-url-label")}
+            <Input
+              placeHolder={t("form-menu.personal-info.linkedin-placeholder")}
               value={formCv.linkedinUrl}
               onChange={handleInputChange("linkedinUrl")}
             />
@@ -181,6 +190,15 @@ const FormMenu = () => {
 
           <Label>
             {t("form-menu.personal-info.github-label")}
+            <Input
+              placeHolder={t("form-menu.personal-info.github-placeholder")}
+              value={formCv.gitHubUser}
+              onChange={handleInputChange("gitHubUser")}
+            />
+          </Label>
+
+          <Label>
+            {t("form-menu.personal-info.github-url-label")}
             <Input
               placeHolder={t("form-menu.personal-info.github-placeholder")}
               value={formCv.gitHubUrl}
@@ -267,7 +285,7 @@ const FormMenu = () => {
           </Label>
 
           <Label>
-            {t("form-menu.experience.start-year-label")}
+            {t("form-menu.experience.end-year-label")}
             <Input
               placeHolder={t("form-menu.placeholder-end-year")}
               value={experience.end_date}

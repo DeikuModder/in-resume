@@ -2,28 +2,7 @@ import useCVInfo from "../hooks/useCVInfo";
 import BasicDesign from "./resume-designs/BasicDesign";
 import AltDesign from "./resume-designs/AltDesign";
 import { useEffect } from "react";
-import { ResumeInfo } from "../type";
-
-const cvEmptyInfo: ResumeInfo = {
-  name: "",
-  pictureUrl: "",
-  role: "",
-  address: "",
-  email: "",
-  phone: "",
-  linkedinUrl: "",
-  linkedinUser: "",
-  gitHubUser: "",
-  gitHubUrl: "",
-  aboutMe: "",
-  projects: [],
-  education: [],
-  experience: [],
-  languages: [],
-  skills: [],
-  softSkills: [],
-  certificates: [],
-};
+import cvEmptyInfo from "../utils/cvEmpty";
 
 const DisplayDesign = () => {
   const { design, cvInfo, setCvInfo } = useCVInfo();

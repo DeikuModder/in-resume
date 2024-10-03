@@ -63,4 +63,5 @@ export type Orientation =
   | "flex-col"
   | "flex-row"
   | "flex-row-reverse"
-  | "flex-col-reverse";
+  | "flex-col-reverse"
+  | "flex-wrap";

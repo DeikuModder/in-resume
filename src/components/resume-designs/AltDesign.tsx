@@ -41,7 +41,12 @@ const AltDesign = () => {
         </div>
 
         <div className="border-b-2 border-neutral-500 border-dashed mb-4">
-          <Contact title={true} orientation="flex-col" font="text-md" />
+          <Contact
+            title={true}
+            orientation="flex-col"
+            font="text-md"
+            textColor="#fff"
+          />
         </div>
 
         <div className="border-b-2 border-neutral-500 border-dashed mb-4">

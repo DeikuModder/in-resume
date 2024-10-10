@@ -40,6 +40,7 @@ export interface ResumeInfo {
   address: string;
   email: string;
   phone: string;
+  secondaryPhone?: string;
   gitHubUser?: string;
   linkedinUser?: string;
   linkedinUrl?: string;

@@ -37,6 +37,8 @@ import Excel from "./Excel";
 import Word from "./Word";
 import PowerPoint from "./PowerPoint";
 import Tauri from "./Tauri";
+import Canva from "./Canva";
+import Capcut from "./Capcut";
 
 const SkillsObj = {
   Html,
@@ -78,6 +80,8 @@ const SkillsObj = {
   Word,
   PowerPoint,
   Tauri,
+  Canva,
+  Capcut,
 };
 
 export default SkillsObj;

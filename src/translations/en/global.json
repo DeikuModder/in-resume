@@ -39,6 +39,7 @@
       "address-label": "Address",
       "email-label": "Email",
       "phone-label": "Phone",
+      "secondary-phone-label": "Secondary Phone",
       "linkedin-label": "LinkedIn username",
       "linkedin-url-label": "URL of your LinkedIn",
       "linkedin-placeholder": "Leave it blank if you don't have a LinkedIn",
@@ -99,5 +100,6 @@
   "picture-button": "Upload picture",
   "search-skill-bar": "Search technology here...",
   "end-date-fallback": "Now",
-  "contact": "Contact"
+  "contact": "Contact",
+  "optional": "Optional"
 }

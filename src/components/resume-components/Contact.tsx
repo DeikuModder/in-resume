@@ -4,6 +4,7 @@ import {
   faAddressBook,
   faMailBulk,
   faPhone,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
@@ -19,7 +20,7 @@ const Contact = ({
   font?: string;
   textColor?: string;
 }) => {
-  const { cvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
   return (
@@ -31,6 +32,20 @@ const Contact = ({
           {cvInfo.phone
             ? cvInfo.phone
             : t("personal-information.fallback-phone")}
+        </li>
+        <li className="flex items-center">
+          {cvInfo.secondaryPhone ? <FontAwesomeIcon icon={faPhone} /> : ""}{" "}
+          {cvInfo.secondaryPhone ? cvInfo.secondaryPhone : ""}
+          {cvInfo.secondaryPhone ? (
+            <button
+              className="hideOnPrint relative right-0 top-0 text-2xl font-bold opacity-20 hover:opacity-100"
+              onClick={() => setCvInfo({ ...cvInfo, secondaryPhone: "" })}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          ) : (
+            ""
+          )}
         </li>
         <li>
           <FontAwesomeIcon icon={faMailBulk} />{" "}

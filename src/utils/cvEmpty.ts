@@ -7,6 +7,7 @@ const cvEmptyInfo: ResumeInfo = {
   address: "",
   email: "",
   phone: "",
+  secondaryPhone: "",
   linkedinUrl: "",
   linkedinUser: "",
   gitHubUser: "",

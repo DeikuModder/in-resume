@@ -39,6 +39,7 @@
       "address-label": "Dirección",
       "email-label": "Email",
       "phone-label": "Teléfono",
+      "secondary-phone-label": "Teléfono secundario",
       "linkedin-label": "Usuario de LinkedIn",
       "linkedin-url-label": "URL de su LinkedIn",
       "linkedin-placeholder": "Dejalo en blanco si no tienes LinkedIn",
@@ -99,5 +100,6 @@
   "picture-button": "Subir foto",
   "search-skill-bar": "Busca una tecnología...",
   "end-date-fallback": "Actualidad",
-  "contact": "Contacto"
+  "contact": "Contacto",
+  "optional": "Opcional"
 }

@@ -171,6 +171,16 @@ const FormMenu = () => {
           </Label>
 
           <Label>
+            {t("form-menu.personal-info.secondary-phone-label")}
+            <Input
+              inputType="tel"
+              value={formCv.secondaryPhone}
+              onChange={handleInputChange("secondaryPhone")}
+              placeHolder={t("optional")}
+            />
+          </Label>
+
+          <Label>
             {t("form-menu.personal-info.linkedin-label")}
             <Input
               placeHolder={t("form-menu.personal-info.linkedin-placeholder")}

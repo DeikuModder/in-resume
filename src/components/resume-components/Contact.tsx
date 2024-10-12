@@ -33,7 +33,7 @@ const Contact = ({
             ? cvInfo.phone
             : t("personal-information.fallback-phone")}
         </li>
-        <li className="flex items-center">
+        <li className="flex items-center gap-2">
           {cvInfo.secondaryPhone ? <FontAwesomeIcon icon={faPhone} /> : ""}{" "}
           {cvInfo.secondaryPhone ? cvInfo.secondaryPhone : ""}
           {cvInfo.secondaryPhone ? (

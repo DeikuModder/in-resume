@@ -44,6 +44,7 @@ const useCV = (): useCVReturnType => {
     skills: [],
     softSkills: [],
     certificates: [],
+    slot: "main",
   };
 
   const [cvInfo, setCvInfo] = useLocalStorage("cvInfo", cvEmptyInfo);

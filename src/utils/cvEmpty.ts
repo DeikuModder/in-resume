@@ -20,6 +20,7 @@ const cvEmptyInfo: ResumeInfo = {
   skills: [],
   softSkills: [],
   certificates: [],
+  slot: "main",
 };
 
 export default cvEmptyInfo;

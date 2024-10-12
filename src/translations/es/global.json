@@ -106,11 +106,8 @@
     "title": "Guardados",
     "slot-abbr": "La ranura será verde si hay información guardada",
     "save-slot-abbr": "Guardar informacion actual",
-    "select-slot-1": "Eligir Ranura 1",
-    "select-slot-2": "Eligir Ranura 2",
-    "select-slot-3": "Eligir Ranura 3",
-    "select-slot-4": "Eligir Ranura 4",
-    "select-slot-5": "Eligir Ranura 5",
-    "select-slot-6": "Eligir Ranura 6"
+    "select-slot": "Elegir ranura",
+    "save-slot": "Guardar en ranura",
+    "selected": "Seleccionada"
   }
 }

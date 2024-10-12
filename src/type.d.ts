@@ -57,6 +57,7 @@ export interface ResumeInfo {
   skills: string[];
   softSkills: SoftSkill[];
   certificates: Certificates[];
+  slot: string;
 }
 
 export interface SoftSkill {

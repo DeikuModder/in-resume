@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import useCVInfo from "../hooks/useCVInfo";
 import { ResumeInfo } from "../type";
 import MODAL from "./MODAL";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 const Slot = ({
   slot,
@@ -19,11 +21,19 @@ const Slot = ({
     <div className="flex items-center gap-2">
       <abbr title={t("saves.slot-abbr")}>
         <button
-          className={`hideOnPrint h-fit w-fit border rounded-xl p-2 font-bold bg-emerald-500 text-emerald-900 border-emerald-900 disabled:border-neutral-700 disabled:bg-neutral-300 disabled:text-neutral-700`}
+          className={`hideOnPrint h-fit w-fit border rounded-xl p-2 font-bold disabled:border-neutral-700 disabled:bg-neutral-300 disabled:text-neutral-700 ${
+            slot.slot === cvInfo.slot
+              ? "bg-emerald-500 text-emerald-900 border-emerald-900"
+              : "bg-orange-500 text-orange-900 border-orange-900"
+          }`}
           disabled={!slot.name}
           onClick={() => setCvInfo(slot)}
         >
-          {text}
+          {slot.slot === cvInfo.slot
+            ? t("saves.selected")
+            : !slot.name
+            ? `${t("saves.save-slot")} ${text}`
+            : `${t("saves.select-slot")} ${text}`}
         </button>
       </abbr>
 
@@ -31,9 +41,9 @@ const Slot = ({
         <button
           className="hideOnPrint h-fit w-fit border border-neutral-700 rounded-xl p-2 bg-neutral-300 text-neutral-700 font-bold"
           disabled={!cvInfo.name}
-          onClick={() => setSlot(cvInfo)}
+          onClick={() => setSlot({ ...cvInfo, slot: text })}
         >
-          +
+          <FontAwesomeIcon icon={faSave} />
         </button>
       </abbr>
     </div>
@@ -66,29 +76,17 @@ const SaveInfoButton = () => {
       title={t("saves.title")}
     >
       <div className="flex flex-col items-center justify-between p-2 h-full">
-        <Slot text={t("saves.select-slot-1")} slot={slot} setSlot={setSlot} />
+        <Slot text={"1"} slot={slot} setSlot={setSlot} />
+        <Slot text={"2"} slot={slotEnglish} setSlot={setSlotEnglish} />
+        <Slot text={"3"} slot={secondSlot} setSlot={setSecondSlot} />
         <Slot
-          text={t("saves.select-slot-2")}
-          slot={slotEnglish}
-          setSlot={setSlotEnglish}
-        />
-        <Slot
-          text={t("saves.select-slot-3")}
-          slot={secondSlot}
-          setSlot={setSecondSlot}
-        />
-        <Slot
-          text={t("saves.select-slot-4")}
+          text={"4"}
           slot={secondSlotEnglish}
           setSlot={setSecondSlotEnglish}
         />
+        <Slot text={"5"} slot={thirdSlot} setSlot={setThirdSlot} />
         <Slot
-          text={t("saves.select-slot-5")}
-          slot={thirdSlot}
-          setSlot={setThirdSlot}
-        />
-        <Slot
-          text={t("saves.select-slot-6")}
+          text={"6"}
           slot={thirdSlotEnglish}
           setSlot={setThirdSlotEnglish}
         />

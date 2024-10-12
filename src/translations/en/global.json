@@ -101,5 +101,16 @@
   "search-skill-bar": "Search technology here...",
   "end-date-fallback": "Now",
   "contact": "Contact",
-  "optional": "Optional"
+  "optional": "Optional",
+  "saves": {
+    "title": "Saves",
+    "slot-abbr": "The slot will be green if there's info",
+    "save-slot-abbr": "Save current information",
+    "select-slot-1": "Select slot 1",
+    "select-slot-2": "Select slot 2",
+    "select-slot-3": "Select slot 3",
+    "select-slot-4": "Select slot 4",
+    "select-slot-5": "Select slot 5",
+    "select-slot-6": "Select slot 6"
+  }
 }

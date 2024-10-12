@@ -5,6 +5,10 @@ export interface Education {
   end_date: string;
 }
 
+export interface ProviderParams {
+  children: JSX.Element | JSX.Element[];
+}
+
 export interface Jobs {
   company_name: string;
   company_link: string;

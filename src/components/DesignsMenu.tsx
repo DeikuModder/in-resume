@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import CVDesigns from "../utils/cvDesign";
 import DesignOption from "./DesignOption";
+import SaveInfoButton from "./SaveInfoButton";
 
 const Menu = ({ onClose }: { onClose: () => void }) => {
   const { setDesign } = useCVInfo();
@@ -13,7 +14,7 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
       <button onClick={onClose}>
         <FontAwesomeIcon icon={faX} className="text-2xl font-bold" />
       </button>
-      <ul className="py-4 list-none flex flex-col items-center gap-4">
+      <ul className="py-4 list-none flex flex-col items-center gap-4 overflow-auto">
         {Object.keys(CVDesigns).map((title, index) => {
           return (
             <li
@@ -26,6 +27,9 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
           );
         })}
       </ul>
+      <div className="fixed bottom-0 p-2">
+        <SaveInfoButton />
+      </div>
     </aside>
   );
 };

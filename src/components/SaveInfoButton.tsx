@@ -4,6 +4,7 @@ import { ResumeInfo } from "../type";
 import MODAL from "./MODAL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
 const Slot = ({
   slot,
@@ -15,21 +16,30 @@ const Slot = ({
   text: string;
 }) => {
   const { setCvInfo, cvInfo } = useCVInfo();
+  const [flag, setFlag] = useState(false);
   const { t } = useTranslation("global");
+
+  useEffect(() => {
+    if (slot.slot === cvInfo.slot) {
+      setFlag(true);
+    } else {
+      setFlag(false);
+    }
+  }, [slot.slot, cvInfo.slot, flag]);
 
   return (
     <div className="flex items-center gap-2">
       <abbr title={t("saves.slot-abbr")}>
         <button
           className={`hideOnPrint h-fit w-fit border rounded-xl p-2 font-bold disabled:border-neutral-700 disabled:bg-neutral-300 disabled:text-neutral-700 ${
-            slot.slot === cvInfo.slot
+            flag
               ? "bg-emerald-500 text-emerald-900 border-emerald-900"
               : "bg-orange-500 text-orange-900 border-orange-900"
           }`}
           disabled={!slot.name}
           onClick={() => setCvInfo(slot)}
         >
-          {slot.slot === cvInfo.slot
+          {flag
             ? t("saves.selected")
             : !slot.name
             ? `${t("saves.save-slot")} ${text}`

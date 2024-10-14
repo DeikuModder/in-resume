@@ -87,6 +87,7 @@ const FormMenu = () => {
     setLanguage({} as Languages);
     setCertificate({} as Certificates);
     setSoftSkill({} as SoftSkill);
+    setDisplayed(false);
   };
 
   const handleInputChange = (field: string) => {

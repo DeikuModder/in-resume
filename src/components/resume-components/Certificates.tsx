@@ -8,10 +8,16 @@ const Certificates = ({
   border,
   orientation,
   titleOrientation,
+  margin,
+  fontSize,
+  additionClass,
 }: {
   border?: boolean;
   orientation?: Orientation;
   titleOrientation?: Orientation;
+  margin?: string;
+  fontSize?: string;
+  additionClass?: string;
 }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
@@ -30,12 +36,14 @@ const Certificates = ({
         <Section
           sectionTitle={t("certificates.title")}
           sectionId="certificates-section"
+          margin={margin}
+          additionClass={additionClass}
         >
-          <ul>
+          <ul className={`${fontSize}`}>
             {cvInfo.certificates.map((certificate, index) => {
               return (
                 <li
-                  className={`mb-8 ${
+                  className={`${margin} ${
                     border && "border border-neutral-500 p-2"
                   } rounded-lg  flex ${orientation}`}
                   key={`education-${index}`}

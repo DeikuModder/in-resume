@@ -8,10 +8,16 @@ const SoftSkills = ({
   border,
   orientation,
   titleOrientation,
+  fontSize,
+  margin,
+  additionClass,
 }: {
   border?: boolean;
   orientation?: Orientation;
   titleOrientation?: Orientation;
+  fontSize?: string;
+  margin?: string;
+  additionClass?: string;
 }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
@@ -30,12 +36,14 @@ const SoftSkills = ({
         <Section
           sectionTitle={t("soft-skills.title")}
           sectionId="soft-skills-section"
+          margin={margin}
+          additionClass={additionClass}
         >
-          <ul>
+          <ul className={`${fontSize}`}>
             {cvInfo.softSkills.map((skill, index) => {
               return (
                 <li
-                  className={`mb-8 ${
+                  className={`${margin} ${
                     border && "border border-neutral-500 p-2"
                   } rounded-lg flex ${orientation}`}
                   key={`softSkill-${index}`}

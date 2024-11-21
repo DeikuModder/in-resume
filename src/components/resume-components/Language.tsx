@@ -3,7 +3,17 @@ import Section from "../Section";
 import DeleteButton from "../DeleteButton";
 import { useTranslation } from "react-i18next";
 
-const Language = ({ border }: { border?: boolean }) => {
+const Language = ({
+  border,
+  fontSize,
+  margin,
+  additionClass,
+}: {
+  border?: boolean;
+  fontSize?: string;
+  margin?: string;
+  additionClass?: string;
+}) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
@@ -21,8 +31,10 @@ const Language = ({ border }: { border?: boolean }) => {
         <Section
           sectionTitle={t("languages.title")}
           sectionId="Languages-section"
+          margin={margin}
+          additionClass={additionClass}
         >
-          <ul className="flex gap-8 list-none">
+          <ul className={`flex gap-8 list-none ${fontSize}`}>
             {cvInfo.languages.map((language, index) => {
               return (
                 <li

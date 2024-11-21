@@ -3,7 +3,15 @@ import Section from "../Section";
 import DeleteButton from "../DeleteButton";
 import { useTranslation } from "react-i18next";
 
-const Projects = () => {
+const Projects = ({
+  fontSize,
+  margin,
+  additionClass,
+}: {
+  fontSize?: string;
+  margin?: string;
+  additionClass?: string;
+}) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
@@ -21,8 +29,10 @@ const Projects = () => {
         <Section
           sectionTitle={t("projects.title")}
           sectionId="projects-section"
+          margin={margin}
+          additionClass={additionClass}
         >
-          <ul className=" inline-flex flex-wrap gap-4 list-none">
+          <ul className={`inline-flex flex-wrap gap-4 list-none ${fontSize}`}>
             {cvInfo.projects.map((project, index) => {
               return (
                 <li

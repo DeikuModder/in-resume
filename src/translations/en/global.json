@@ -8,29 +8,29 @@
     "fallback-phone": "(123)456-7890"
   },
   "about-me": {
-    "title": "About me",
+    "title": "PROFILE",
     "default-text": "(Put a brief description about you here) Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus suscipit cum dolore recusandae. Labore doloremque eligendi sequi accusamus ullam, illum nam debitis nobis? Eveniet, id. Maxime optio quidem velit repellendus."
   },
   "experience": {
-    "title": "Experience"
+    "title": "WORK EXPERIENCE"
   },
   "education": {
-    "title": "Education"
+    "title": "EDUCATION"
   },
   "certificates": {
-    "title": "Certificates"
+    "title": "CERTIFICATES"
   },
   "projects": {
-    "title": "Projects"
+    "title": "PROJECTS"
   },
   "languages": {
-    "title": "Languages"
+    "title": "LANGUAGES"
   },
   "soft-skills": {
-    "title": "Soft Skills"
+    "title": "SOFT SKILLS"
   },
   "skills": {
-    "title": "Tech-stack"
+    "title": "TECH-STACK"
   },
   "form-menu": {
     "personal-info": {

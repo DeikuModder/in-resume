@@ -9,13 +9,15 @@ function App() {
   return (
     <ModalProvider>
       <CVInfoProvider>
-        <Header />
-        <main>
-          <DisplayDesign />
-          <FormMenu />
-        </main>
+        <div className="min-h-[100dvh] grid grid-rows-[auto_1fr_auto]">
+          <Header />
+          <main>
+            <DisplayDesign />
+            <FormMenu />
+          </main>
+          <Footer />
+        </div>
       </CVInfoProvider>
-      <Footer />
     </ModalProvider>
   );
 }

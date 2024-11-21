@@ -5,7 +5,7 @@ import DeleteButton from "../DeleteButton";
 import SkillsObj from "./skills/index";
 import { useTranslation } from "react-i18next";
 
-const Skills = () => {
+const Skills = ({ margin }: { margin?: string }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
@@ -20,6 +20,7 @@ const Skills = () => {
       sectionTitle={t("skills.title")}
       sectionId="skills-section"
       additionClass={`${cvInfo.skills.length <= 0 && "hideOnPrint"}`}
+      margin={margin}
     >
       <ul className="inline-flex flex-wrap gap-4 list-none">
         {cvInfo.skills.map((name, index) => {

@@ -14,11 +14,13 @@ const Contact = ({
   orientation,
   font,
   textColor,
+  extraStyle,
 }: {
   title?: boolean;
   orientation?: Orientation;
   font?: string;
   textColor?: string;
+  extraStyle?: string;
 }) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
@@ -26,7 +28,9 @@ const Contact = ({
   return (
     <section>
       {title && <h3 className="text-2xl font-bold">{t("contact")}</h3>}
-      <ul className={`p-2 list-none gap-3 ${font} flex ${orientation}`}>
+      <ul
+        className={`p-2 list-none gap-3 ${font} flex ${orientation} ${extraStyle}`}
+      >
         <li>
           <FontAwesomeIcon icon={faPhone} />{" "}
           {cvInfo.phone

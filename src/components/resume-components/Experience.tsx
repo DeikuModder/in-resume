@@ -3,7 +3,15 @@ import Section from "../Section";
 import DeleteButton from "../DeleteButton";
 import { useTranslation } from "react-i18next";
 
-const Experience = () => {
+const Experience = ({
+  fontSize,
+  margin,
+  additionClass,
+}: {
+  fontSize?: string;
+  margin?: string;
+  additionClass?: string;
+}) => {
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
@@ -21,11 +29,16 @@ const Experience = () => {
         <Section
           sectionTitle={t("experience.title")}
           sectionId="experience-section"
+          margin={margin}
+          additionClass={additionClass}
         >
-          <ul>
+          <ul className={`${fontSize}`}>
             {cvInfo.experience.map((work, index) => {
               return (
-                <li className="mb-8 rounded-lg" key={`experience-${index}`}>
+                <li
+                  className={`${margin} rounded-lg`}
+                  key={`experience-${index}`}
+                >
                   <div className="flex">
                     <a
                       href={work.company_link}

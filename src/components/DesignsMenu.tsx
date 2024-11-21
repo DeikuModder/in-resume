@@ -14,7 +14,7 @@ const Menu = ({ onClose }: { onClose: () => void }) => {
       <button onClick={onClose}>
         <FontAwesomeIcon icon={faX} className="text-2xl font-bold" />
       </button>
-      <ul className="py-4 list-none flex flex-col items-center gap-4 overflow-auto">
+      <ul className="py-4 list-none flex flex-col items-center gap-4 overflow-auto max-h-[525px]">
         {Object.keys(CVDesigns).map((title, index) => {
           return (
             <li

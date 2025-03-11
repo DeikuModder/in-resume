@@ -5,7 +5,7 @@ import Design3 from "@/assets/design3.webp";
 const CVDesigns = {
   "Basic Design": Design1,
   "Modern Design": Design2,
-  "Basic Design Alt": Design3,
+  "Harvard Design": Design3,
 };
 
 export default CVDesigns;

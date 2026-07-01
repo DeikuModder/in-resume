@@ -1,0 +1,31 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: in-resume-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: in-resume
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: in-resume-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/in-resume
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-7d}
+      PORT: 3000
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+
+volumes:
+  mongo-data:

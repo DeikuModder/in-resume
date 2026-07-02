@@ -23,10 +23,7 @@ export class ResumesService {
       .exec();
   }
 
-  async findBySlot(
-    userId: string,
-    slotName: string,
-  ): Promise<ResumeDocument> {
+  async findBySlot(userId: string, slotName: string): Promise<ResumeDocument> {
     const resume = await this.resumeModel
       .findOne({ userId: new Types.ObjectId(userId), slotName })
       .select('-__v')
@@ -38,10 +35,7 @@ export class ResumesService {
     return resume;
   }
 
-  async upsert(
-    userId: string,
-    dto: UpsertResumeDto,
-  ): Promise<ResumeDocument> {
+  async upsert(userId: string, dto: UpsertResumeDto): Promise<ResumeDocument> {
     const { slotName, ...data } = dto;
 
     const existing = await this.resumeModel.countDocuments({
@@ -73,7 +67,10 @@ export class ResumesService {
 
   async remove(userId: string, id: string): Promise<void> {
     const result = await this.resumeModel
-      .findOneAndDelete({ _id: new Types.ObjectId(id), userId: new Types.ObjectId(userId) })
+      .findOneAndDelete({
+        _id: new Types.ObjectId(id),
+        userId: new Types.ObjectId(userId),
+      })
       .exec();
 
     if (!result) {

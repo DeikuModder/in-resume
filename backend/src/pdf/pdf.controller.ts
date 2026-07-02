@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Res, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Res,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import type { Response } from 'express';
 import { PdfService } from './pdf.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';

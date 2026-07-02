@@ -70,27 +70,51 @@ export class UpsertResumeDto {
   @IsString() @IsOptional() linkedinUrl?: string;
   @IsString() @IsOptional() aboutMe?: string;
 
-  @IsArray() @IsOptional() @ValidateNested({ each: true }) @Type(() => ProjectDto)
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => ProjectDto)
   projects?: ProjectDto[];
 
-  @IsArray() @IsOptional() @ValidateNested({ each: true }) @Type(() => EducationDto)
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => EducationDto)
   education?: EducationDto[];
 
-  @IsArray() @IsOptional() @ValidateNested({ each: true }) @Type(() => JobDto)
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => JobDto)
   experience?: JobDto[];
 
-  @IsArray() @IsOptional() @ValidateNested({ each: true }) @Type(() => LanguageDto)
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => LanguageDto)
   languages?: LanguageDto[];
 
-  @IsArray() @IsOptional() @ArrayMaxSize(60) @IsString({ each: true })
+  @IsArray()
+  @IsOptional()
+  @ArrayMaxSize(60)
+  @IsString({ each: true })
   skills?: string[];
 
-  @IsArray() @IsOptional() @ValidateNested({ each: true }) @Type(() => SoftSkillDto)
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => SoftSkillDto)
   softSkills?: SoftSkillDto[];
 
-  @IsArray() @IsOptional() @ValidateNested({ each: true }) @Type(() => CertificateDto)
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => CertificateDto)
   certificates?: CertificateDto[];
 
-  @IsNumber() @IsOptional() @Min(0) @Max(2)
+  @IsNumber()
+  @IsOptional()
+  @Min(0)
+  @Max(2)
   designIndex?: number;
 }

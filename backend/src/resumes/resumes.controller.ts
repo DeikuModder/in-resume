@@ -27,10 +27,7 @@ export class ResumesController {
   }
 
   @Get(':slotName')
-  findOne(
-    @Request() req: AuthRequest,
-    @Param('slotName') slotName: string,
-  ) {
+  findOne(@Request() req: AuthRequest, @Param('slotName') slotName: string) {
     return this.resumesService.findBySlot(req.user.userId, slotName);
   }
 

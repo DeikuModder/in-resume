@@ -12,7 +12,8 @@
       "@/hooks/*": ["src/hooks/*"],
       "@/Providers/*": ["src/Providers/*"],
       "@/utils/*": ["src/utils/*"],
-      "@/assets/*": ["src/assets/*"]
+      "@/assets/*": ["src/assets/*"],
+      "@/templates/*": ["src/templates/*"]
     },
 
     /* Bundler mode */

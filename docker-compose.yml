@@ -20,12 +20,10 @@ services:
       - "3000:3000"
     depends_on:
       - mongodb
+    env_file:
+      - ./backend/.env
     environment:
       MONGODB_URI: mongodb://mongodb:27017/in-resume
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRATION: ${JWT_EXPIRATION:-7d}
-      PORT: 3000
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
 
 volumes:
   mongo-data:

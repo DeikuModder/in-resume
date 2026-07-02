@@ -15,4 +15,38 @@ export class UsersService {
     const user = new this.userModel({ email, password: hashedPassword });
     return user.save();
   }
+
+  async findById(id: string): Promise<UserDocument | null> {
+    return this.userModel.findById(id).exec();
+  }
+
+  async findByStripeCustomerId(stripeCustomerId: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ stripeCustomerId }).exec();
+  }
+
+  async updateStripeInfo(
+    userId: string,
+    data: {
+      stripeCustomerId?: string;
+      stripeSubscriptionId?: string;
+      subscriptionTier?: 'free' | 'premium';
+      subscriptionStatus?: 'active' | 'canceled' | 'past_due' | 'none';
+      subscriptionPeriodEnd?: Date | null;
+    },
+  ): Promise<UserDocument | null> {
+    return this.userModel.findByIdAndUpdate(userId, { $set: data }, { new: true }).exec();
+  }
+
+  async downgradeToFree(userId: string): Promise<UserDocument | null> {
+    return this.userModel.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          subscriptionTier: 'free',
+          subscriptionStatus: 'canceled',
+        },
+      },
+      { new: true },
+    ).exec();
+  }
 }

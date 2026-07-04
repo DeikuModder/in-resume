@@ -1,5 +1,9 @@
 packages:
   - "."
+allowBuilds:
+  bcrypt: true
+  puppeteer: true
+  unrs-resolver: true
 ignoredBuiltDependencies:
   - bcrypt
   - puppeteer

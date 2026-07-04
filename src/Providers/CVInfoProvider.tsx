@@ -1,6 +1,7 @@
 import { ResumeInfo } from "@/src/type";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import React from "react";
+import { getTemplate, getAllTemplates } from "@/templates/index";
+import React, { useEffect } from "react";
 
 export const InfoContext = React.createContext({} as ReturnType<typeof useCV>);
 
@@ -9,6 +10,14 @@ type useCVReturnType = {
   setCvInfo: (cvObj: ResumeInfo) => void;
   design: number;
   setDesign: (designNumber: number) => void;
+  templateId: string;
+  setTemplateId: (id: string) => void;
+  sectionOrder: string[];
+  setSectionOrder: (order: string[]) => void;
+  sidebarOrder: string[];
+  setSidebarOrder: (order: string[]) => void;
+  accentColor: string;
+  setAccentColor: (color: string) => void;
   slot: ResumeInfo;
   setSlot: React.Dispatch<React.SetStateAction<ResumeInfo>>;
   slotEnglish: ResumeInfo;
@@ -49,6 +58,36 @@ const useCV = (): useCVReturnType => {
 
   const [cvInfo, setCvInfo] = useLocalStorage("cvInfo", cvEmptyInfo);
   const [design, setDesign] = useLocalStorage("design", 0);
+
+  const allTemplates = getAllTemplates();
+  const defaultTemplateId = allTemplates[0].id;
+  const [templateId, setTemplateIdRaw] = useLocalStorage("templateId", defaultTemplateId);
+  const [sectionOrder, setSectionOrder] = useLocalStorage("sectionOrder", getTemplate(defaultTemplateId).main.map((s) => s.id));
+  const [sidebarOrder, setSidebarOrder] = useLocalStorage("sidebarOrder", getTemplate(defaultTemplateId).sidebar?.map((s) => s.id) ?? []);
+  const [accentColor, setAccentColor] = useLocalStorage("accentColor", getTemplate(defaultTemplateId).styles.defaultAccent);
+
+  const setTemplateId = (id: string) => {
+    const tpl = getTemplate(id);
+    setTemplateIdRaw(id);
+    setSectionOrder(tpl.main.map((s) => s.id));
+    setSidebarOrder(tpl.sidebar?.map((s) => s.id) ?? []);
+    setAccentColor(tpl.styles.defaultAccent);
+  };
+
+  // Sync sectionOrder/sidebarOrder when templateId changes (e.g. from localStorage)
+  useEffect(() => {
+    const tpl = getTemplate(templateId);
+    const mainIds = tpl.main.map((s) => s.id);
+    const sidebarIds = tpl.sidebar?.map((s) => s.id) ?? [];
+    // Only reset if the stored order contains unknown ids for this template
+    const mainValid = mainIds.every((id) => (sectionOrder as string[]).includes(id)) &&
+      (sectionOrder as string[]).every((id) => (mainIds as string[]).includes(id));
+    const sidebarValid = sidebarIds.every((id) => (sidebarOrder as string[]).includes(id)) &&
+      (sidebarOrder as string[]).every((id) => (sidebarIds as string[]).includes(id));
+    if (!mainValid) setSectionOrder(mainIds);
+    if (!sidebarValid) setSidebarOrder(sidebarIds);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateId]);
   const [slot1, setSlot1] = useLocalStorage("slot1", {});
   const [slot2, setSlot2] = useLocalStorage("slot2", {});
   const [slot3, setSlot3] = useLocalStorage("slot3", {});
@@ -89,6 +128,14 @@ const useCV = (): useCVReturnType => {
     setCvInfo,
     design,
     setDesign,
+    templateId,
+    setTemplateId,
+    sectionOrder: sectionOrder as string[],
+    setSectionOrder,
+    sidebarOrder: sidebarOrder as string[],
+    setSidebarOrder,
+    accentColor: accentColor as string,
+    setAccentColor,
     slot,
     setSlot,
     slotEnglish,

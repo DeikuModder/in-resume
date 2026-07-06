@@ -54,6 +54,46 @@ a:hover {
   text-decoration: underline;
 }
 
+/* ─── Inline editing ─────────────────────────────────── */
+.editable-text {
+  display: inline-block;
+  min-width: 4px;
+  cursor: text;
+  outline: none;
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+}
+
+.editable-text:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.editable-text:focus {
+  background-color: rgba(59, 130, 246, 0.06);
+  box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.7);
+}
+
+.editable-text:empty::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+  pointer-events: none;
+}
+
+@media print {
+  .editable-text {
+    cursor: default;
+  }
+  .editable-text:hover,
+  .editable-text:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .editable-text:empty::before {
+    display: none;
+  }
+}
+
 #root {
   width: 100%;
   height: 100%;

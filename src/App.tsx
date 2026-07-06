@@ -4,7 +4,7 @@ import AuthProvider from "./Providers/AuthProvider";
 import DisplayDesign from "./components/DisplayDesign";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import FormMenu from "./components/form-menu/FormMenu";
+import Toolbar from "./components/Toolbar";
 
 function App() {
   return (
@@ -15,10 +15,10 @@ function App() {
             <Header />
             <main>
               <DisplayDesign />
-              <FormMenu />
             </main>
             <Footer />
           </div>
+          <Toolbar />
         </CVInfoProvider>
       </ModalProvider>
     </AuthProvider>

@@ -15,18 +15,8 @@ const useCVInfo = () => {
     setSidebarOrder,
     accentColor,
     setAccentColor,
-    slot,
+    slots,
     setSlot,
-    slotEnglish,
-    setSlotEnglish,
-    secondSlot,
-    setSecondSlot,
-    secondSlotEnglish,
-    setSecondSlotEnglish,
-    thirdSlot,
-    setThirdSlot,
-    thirdSlotEnglish,
-    setThirdSlotEnglish,
   } = useCV;
 
   return {
@@ -42,18 +32,8 @@ const useCVInfo = () => {
     setSidebarOrder,
     accentColor,
     setAccentColor,
-    slot,
+    slots,
     setSlot,
-    slotEnglish,
-    setSlotEnglish,
-    secondSlot,
-    setSecondSlot,
-    secondSlotEnglish,
-    setSecondSlotEnglish,
-    thirdSlot,
-    setThirdSlot,
-    thirdSlotEnglish,
-    setThirdSlotEnglish,
   };
 };
 

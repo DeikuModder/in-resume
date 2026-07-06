@@ -3,6 +3,10 @@ import { useTranslation } from "react-i18next";
 import Section from "../Section";
 import { Orientation } from "@/src/type";
 import DeleteButton from "../DeleteButton";
+import EditableText from "@/components/editable/EditableText";
+import EditableTextArea from "@/components/editable/EditableTextArea";
+import AddButton from "@/components/editable/AddButton";
+import { SoftSkill as SoftSkillType } from "@/src/type";
 
 const SoftSkills = ({
   border,
@@ -22,50 +26,62 @@ const SoftSkills = ({
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
+  const updateSkill = (
+    index: number,
+    field: keyof SoftSkillType,
+    value: string,
+  ) => {
+    const newSkills = [...cvInfo.softSkills];
+    newSkills[index] = { ...newSkills[index], [field]: value };
+    setCvInfo({ ...cvInfo, softSkills: newSkills });
+  };
+
   const handleDelete = (index: number) => {
-    const newCv = { ...cvInfo };
-    newCv.softSkills.splice(index, 1);
-    setCvInfo(newCv);
+    const newSkills = [...cvInfo.softSkills];
+    newSkills.splice(index, 1);
+    setCvInfo({ ...cvInfo, softSkills: newSkills });
+  };
+
+  const handleAdd = () => {
+    setCvInfo({
+      ...cvInfo,
+      softSkills: [...cvInfo.softSkills, { name: "", description: "" }],
+    });
   };
 
   return (
-    <>
-      {cvInfo.softSkills.length <= 0 ? (
-        <></>
-      ) : (
-        <Section
-          sectionTitle={t("soft-skills.title")}
-          sectionId="soft-skills-section"
-          margin={margin}
-          additionClass={additionClass}
-        >
-          <ul className={`${fontSize}`}>
-            {cvInfo.softSkills.map((skill, index) => {
-              return (
-                <li
-                  className={`${margin} ${
-                    border && "border border-neutral-500 p-2"
-                  } rounded-lg flex ${orientation}`}
-                  key={`softSkill-${index}`}
-                >
-                  <div className={`flex ${titleOrientation}`}>
-                    <h3
-                      className={`text-lg font-semibold ${
-                        titleOrientation === "flex-row" && "w-[50%]"
-                      }`}
-                    >
-                      {skill.name}
-                    </h3>
-                    <DeleteButton handleDelete={handleDelete} index={index} />
-                  </div>
-                  <p>{skill.description}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </Section>
-      )}
-    </>
+    <Section
+      sectionTitle={t("soft-skills.title")}
+      sectionId="soft-skills-section"
+      margin={margin}
+      additionClass={`${additionClass ?? ""} ${cvInfo.softSkills.length === 0 ? "print:hidden" : ""}`}
+    >
+      <ul className={`${fontSize}`}>
+        {cvInfo.softSkills.map((skill, index) => (
+          <li
+            className={`${margin} ${border && "border border-neutral-500 p-2"} rounded-lg flex ${orientation}`}
+            key={`softSkill-${index}`}
+          >
+            <div className={`flex items-center ${titleOrientation}`}>
+              <EditableText
+                tag="h3"
+                value={skill.name}
+                onChange={(v) => updateSkill(index, "name", v)}
+                placeholder="Skill name"
+                className={`text-lg font-semibold ${titleOrientation === "flex-row" ? "w-[50%]" : ""}`}
+              />
+              <DeleteButton handleDelete={handleDelete} index={index} />
+            </div>
+            <EditableTextArea
+              value={skill.description}
+              onChange={(v) => updateSkill(index, "description", v)}
+              placeholder="Brief description…"
+            />
+          </li>
+        ))}
+      </ul>
+      <AddButton onClick={handleAdd} label={t("soft-skills.add")} />
+    </Section>
   );
 };
 

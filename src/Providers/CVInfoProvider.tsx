@@ -1,7 +1,9 @@
-import { ResumeInfo } from "@/src/type";
+﻿import { ResumeInfo } from "@/src/type";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { getTemplate, getAllTemplates } from "@/templates/index";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { useAuth } from "./useAuth";
+import { API_BASE } from "../services/api";
 
 export const InfoContext = React.createContext({} as ReturnType<typeof useCV>);
 
@@ -18,21 +20,13 @@ type useCVReturnType = {
   setSidebarOrder: (order: string[]) => void;
   accentColor: string;
   setAccentColor: (color: string) => void;
-  slot: ResumeInfo;
-  setSlot: React.Dispatch<React.SetStateAction<ResumeInfo>>;
-  slotEnglish: ResumeInfo;
-  setSlotEnglish: React.Dispatch<React.SetStateAction<ResumeInfo>>;
-  secondSlot: ResumeInfo;
-  setSecondSlot: React.Dispatch<React.SetStateAction<ResumeInfo>>;
-  secondSlotEnglish: ResumeInfo;
-  setSecondSlotEnglish: React.Dispatch<React.SetStateAction<ResumeInfo>>;
-  thirdSlot: ResumeInfo;
-  setThirdSlot: React.Dispatch<React.SetStateAction<ResumeInfo>>;
-  thirdSlotEnglish: ResumeInfo;
-  setThirdSlotEnglish: React.Dispatch<React.SetStateAction<ResumeInfo>>;
+  slots: Record<string, ResumeInfo>;
+  setSlot: (key: string, info: ResumeInfo) => void;
 };
 
 const useCV = (): useCVReturnType => {
+  const { token } = useAuth();
+
   const cvEmptyInfo: ResumeInfo = {
     name: "",
     pictureUrl: "",
@@ -56,15 +50,30 @@ const useCV = (): useCVReturnType => {
     slot: "main",
   };
 
-  const [cvInfo, setCvInfo] = useLocalStorage("cvInfo", cvEmptyInfo);
-  const [design, setDesign] = useLocalStorage("design", 0);
+  const [cvInfo, setCvInfo] = useLocalStorage<ResumeInfo>(
+    "cvInfo",
+    cvEmptyInfo,
+  );
+  const [design, setDesign] = useLocalStorage<number>("design", 0);
 
   const allTemplates = getAllTemplates();
   const defaultTemplateId = allTemplates[0].id;
-  const [templateId, setTemplateIdRaw] = useLocalStorage("templateId", defaultTemplateId);
-  const [sectionOrder, setSectionOrder] = useLocalStorage("sectionOrder", getTemplate(defaultTemplateId).main.map((s) => s.id));
-  const [sidebarOrder, setSidebarOrder] = useLocalStorage("sidebarOrder", getTemplate(defaultTemplateId).sidebar?.map((s) => s.id) ?? []);
-  const [accentColor, setAccentColor] = useLocalStorage("accentColor", getTemplate(defaultTemplateId).styles.defaultAccent);
+  const [templateId, setTemplateIdRaw] = useLocalStorage<string>(
+    "templateId",
+    defaultTemplateId,
+  );
+  const [sectionOrder, setSectionOrder] = useLocalStorage<string[]>(
+    "sectionOrder",
+    getTemplate(defaultTemplateId).main.map((s) => s.id),
+  );
+  const [sidebarOrder, setSidebarOrder] = useLocalStorage<string[]>(
+    "sidebarOrder",
+    getTemplate(defaultTemplateId).sidebar?.map((s) => s.id) ?? [],
+  );
+  const [accentColor, setAccentColor] = useLocalStorage<string>(
+    "accentColor",
+    getTemplate(defaultTemplateId).styles.defaultAccent,
+  );
 
   const setTemplateId = (id: string) => {
     const tpl = getTemplate(id);
@@ -79,49 +88,51 @@ const useCV = (): useCVReturnType => {
     const tpl = getTemplate(templateId);
     const mainIds = tpl.main.map((s) => s.id);
     const sidebarIds = tpl.sidebar?.map((s) => s.id) ?? [];
-    // Only reset if the stored order contains unknown ids for this template
-    const mainValid = mainIds.every((id) => (sectionOrder as string[]).includes(id)) &&
-      (sectionOrder as string[]).every((id) => (mainIds as string[]).includes(id));
-    const sidebarValid = sidebarIds.every((id) => (sidebarOrder as string[]).includes(id)) &&
-      (sidebarOrder as string[]).every((id) => (sidebarIds as string[]).includes(id));
+    const mainValid =
+      mainIds.every((id) => (sectionOrder as string[]).includes(id)) &&
+      sectionOrder.every((id) => (mainIds as string[]).includes(id));
+    const sidebarValid =
+      sidebarIds.every((id) => (sidebarOrder as string[]).includes(id)) &&
+      sidebarOrder.every((id) => (sidebarIds as string[]).includes(id));
     if (!mainValid) setSectionOrder(mainIds);
     if (!sidebarValid) setSidebarOrder(sidebarIds);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templateId]);
-  const [slot1, setSlot1] = useLocalStorage("slot1", {});
-  const [slot2, setSlot2] = useLocalStorage("slot2", {});
-  const [slot3, setSlot3] = useLocalStorage("slot3", {});
-  const [slot4, setSlot4] = useLocalStorage("slot4", {});
-  const [slot5, setSlot5] = useLocalStorage("slot5", {});
-  const [slot6, setSlot6] = useLocalStorage("slot6", {});
 
-  const slot = slot1 as ResumeInfo;
-  const setSlot = setSlot1 as React.Dispatch<React.SetStateAction<ResumeInfo>>;
+  // â”€â”€â”€ Slots (single Record replaces slot1-slot6) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const [slots, setSlotsRaw] = useLocalStorage<Record<string, ResumeInfo>>(
+    "resumeSlots",
+    {},
+  );
 
-  const slotEnglish = slot2 as ResumeInfo;
-  const setSlotEnglish = setSlot2 as React.Dispatch<
-    React.SetStateAction<ResumeInfo>
-  >;
+  const setSlot = (key: string, info: ResumeInfo) => {
+    setSlotsRaw({ ...slots, [key]: info });
+  };
 
-  const secondSlot = slot3 as ResumeInfo;
-  const setSecondSlot = setSlot3 as React.Dispatch<
-    React.SetStateAction<ResumeInfo>
-  >;
+  // â”€â”€â”€ Autosave debounce (2 s) â€” syncs to backend when authenticated â”€â”€â”€â”€â”€â”€â”€â”€
+  const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  const secondSlotEnglish = slot4 as ResumeInfo;
-  const setSecondSlotEnglish = setSlot4 as React.Dispatch<
-    React.SetStateAction<ResumeInfo>
-  >;
+  useEffect(() => {
+    if (!token) return;
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(async () => {
+      try {
+        await fetch(`${API_BASE}/resumes`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ slotName: "slot1", ...cvInfo }),
+        });
+      } catch {
+        // silent â€” autosave is best-effort
+      }
+    }, 2000);
 
-  const thirdSlot = slot5 as ResumeInfo;
-  const setThirdSlot = setSlot5 as React.Dispatch<
-    React.SetStateAction<ResumeInfo>
-  >;
-
-  const thirdSlotEnglish = slot6 as ResumeInfo;
-  const setThirdSlotEnglish = setSlot6 as React.Dispatch<
-    React.SetStateAction<ResumeInfo>
-  >;
+    return () => clearTimeout(debounceTimer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cvInfo, token]);
 
   return {
     cvInfo,
@@ -130,24 +141,14 @@ const useCV = (): useCVReturnType => {
     setDesign,
     templateId,
     setTemplateId,
-    sectionOrder: sectionOrder as string[],
+    sectionOrder,
     setSectionOrder,
-    sidebarOrder: sidebarOrder as string[],
+    sidebarOrder,
     setSidebarOrder,
-    accentColor: accentColor as string,
+    accentColor,
     setAccentColor,
-    slot,
+    slots,
     setSlot,
-    slotEnglish,
-    setSlotEnglish,
-    secondSlot,
-    setSecondSlot,
-    secondSlotEnglish,
-    setSecondSlotEnglish,
-    thirdSlot,
-    setThirdSlot,
-    thirdSlotEnglish,
-    setThirdSlotEnglish,
   };
 };
 

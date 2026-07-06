@@ -12,22 +12,28 @@
     "default-text": "(Put a brief description about you here) Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus suscipit cum dolore recusandae. Labore doloremque eligendi sequi accusamus ullam, illum nam debitis nobis? Eveniet, id. Maxime optio quidem velit repellendus."
   },
   "experience": {
-    "title": "WORK EXPERIENCE"
+    "title": "WORK EXPERIENCE",
+    "add": "Add experience"
   },
   "education": {
-    "title": "EDUCATION"
+    "title": "EDUCATION",
+    "add": "Add education"
   },
   "certificates": {
-    "title": "CERTIFICATES"
+    "title": "CERTIFICATES",
+    "add": "Add certificate"
   },
   "projects": {
-    "title": "PROJECTS"
+    "title": "PROJECTS",
+    "add": "Add project"
   },
   "languages": {
-    "title": "LANGUAGES"
+    "title": "LANGUAGES",
+    "add": "Add language"
   },
   "soft-skills": {
-    "title": "SOFT SKILLS"
+    "title": "SOFT SKILLS",
+    "add": "Add soft skill"
   },
   "skills": {
     "title": "TECH-STACK"

@@ -2,6 +2,10 @@ import useCVInfo from "@/hooks/useCVInfo";
 import Section from "../Section";
 import DeleteButton from "../DeleteButton";
 import { useTranslation } from "react-i18next";
+import EditableText from "@/components/editable/EditableText";
+import EditableTextArea from "@/components/editable/EditableTextArea";
+import AddButton from "@/components/editable/AddButton";
+import { Jobs } from "@/src/type";
 
 const Experience = ({
   fontSize,
@@ -15,55 +19,92 @@ const Experience = ({
   const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
+  const updateWork = (index: number, field: keyof Jobs, value: string) => {
+    const newExp = [...cvInfo.experience];
+    newExp[index] = { ...newExp[index], [field]: value };
+    setCvInfo({ ...cvInfo, experience: newExp });
+  };
+
   const handleDelete = (index: number) => {
-    const newCv = { ...cvInfo };
-    newCv.experience.splice(index, 1);
-    setCvInfo(newCv);
+    const newExp = [...cvInfo.experience];
+    newExp.splice(index, 1);
+    setCvInfo({ ...cvInfo, experience: newExp });
+  };
+
+  const handleAdd = () => {
+    setCvInfo({
+      ...cvInfo,
+      experience: [
+        ...cvInfo.experience,
+        {
+          company_name: "",
+          company_link: "",
+          role: "",
+          summary: "",
+          start_date: "",
+          end_date: "",
+        },
+      ],
+    });
   };
 
   return (
-    <>
-      {cvInfo.experience.length <= 0 ? (
-        <></>
-      ) : (
-        <Section
-          sectionTitle={t("experience.title")}
-          sectionId="experience-section"
-          margin={margin}
-          additionClass={additionClass}
-        >
-          <ul className={`${fontSize}`}>
-            {cvInfo.experience.map((work, index) => {
-              return (
-                <li
-                  className={`${margin} rounded-lg`}
-                  key={`experience-${index}`}
-                >
-                  <div className="flex">
-                    <a
-                      href={work.company_link}
-                      target="_blank"
-                      className="w-[50%]"
-                    >
-                      <h3 className="text-lg font-semibold">
-                        {work.company_name}
-                      </h3>
-                    </a>
-                    <p className="w-[50%] text-end">
-                      {work.start_date}-
-                      {work.end_date ? work.end_date : t("end-date-fallback")}
-                    </p>
-                    <DeleteButton handleDelete={handleDelete} index={index} />
-                  </div>
-                  <p className="font-semibold">{work.role}</p>
-                  <p>{work.summary}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </Section>
-      )}
-    </>
+    <Section
+      sectionTitle={t("experience.title")}
+      sectionId="experience-section"
+      margin={margin}
+      additionClass={`${additionClass ?? ""} ${cvInfo.experience.length === 0 ? "print:hidden" : ""}`}
+    >
+      <ul className={`${fontSize}`}>
+        {cvInfo.experience.map((work, index) => (
+          <li className={`${margin} rounded-lg`} key={`experience-${index}`}>
+            <div className="flex items-start gap-1">
+              <div className="flex-1">
+                <EditableText
+                  tag="h3"
+                  value={work.company_name}
+                  onChange={(v) => updateWork(index, "company_name", v)}
+                  placeholder="Company name"
+                  className="text-lg font-semibold"
+                />
+              </div>
+              <div className="flex items-center gap-1 text-sm">
+                <EditableText
+                  value={work.start_date}
+                  onChange={(v) => updateWork(index, "start_date", v)}
+                  placeholder="Start"
+                />
+                {" – "}
+                <EditableText
+                  value={work.end_date}
+                  onChange={(v) => updateWork(index, "end_date", v)}
+                  placeholder={t("end-date-fallback")}
+                />
+              </div>
+              <DeleteButton handleDelete={handleDelete} index={index} />
+            </div>
+            <EditableText
+              value={work.role}
+              onChange={(v) => updateWork(index, "role", v)}
+              placeholder="Role / position"
+              className="font-semibold"
+            />
+            <EditableTextArea
+              value={work.summary}
+              onChange={(v) => updateWork(index, "summary", v)}
+              placeholder="Summary of responsibilities and achievements…"
+            />
+            <EditableText
+              value={work.company_link}
+              onChange={(v) => updateWork(index, "company_link", v)}
+              placeholder="https://company.com (optional)"
+              className="text-xs text-neutral-400 hideOnPrint"
+            />
+          </li>
+        ))}
+      </ul>
+      <AddButton onClick={handleAdd} label={t("experience.add")} />
+    </Section>
   );
 };
 

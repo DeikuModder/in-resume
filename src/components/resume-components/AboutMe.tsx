@@ -1,6 +1,7 @@
 import useCVInfo from "@/hooks/useCVInfo";
 import Section from "../Section";
 import { useTranslation } from "react-i18next";
+import EditableTextArea from "@/components/editable/EditableTextArea";
 
 const AboutMe = ({
   fontSize,
@@ -11,7 +12,7 @@ const AboutMe = ({
   additionClass?: string;
   margin?: string;
 }) => {
-  const { cvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo } = useCVInfo();
   const { t } = useTranslation("global");
 
   return (
@@ -21,11 +22,12 @@ const AboutMe = ({
       additionClass={additionClass}
       margin={margin}
     >
-      <p className={`${fontSize} text`}>
-        {cvInfo.aboutMe
-          ? cvInfo.aboutMe
-          : "(Put a brief description about you here) Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus suscipit cum dolore recusandae. Labore doloremque eligendi sequi accusamus ullam, illum nam debitis nobis? Eveniet, id. Maxime optio quidem velit repellendus."}
-      </p>
+      <EditableTextArea
+        value={cvInfo.aboutMe}
+        onChange={(v) => setCvInfo({ ...cvInfo, aboutMe: v })}
+        placeholder={t("about-me.default-text")}
+        className={`${fontSize} text`}
+      />
     </Section>
   );
 };

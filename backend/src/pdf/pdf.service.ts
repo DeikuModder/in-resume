@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer';
 import { ResumesService } from '../resumes/resumes.service';
 
@@ -6,14 +6,21 @@ import { ResumesService } from '../resumes/resumes.service';
 export class PdfService {
   constructor(private resumesService: ResumesService) {}
 
-  async generate(userId: string, slotName: string): Promise<Buffer> {
+  async generate(
+    userId: string,
+    slotName: string,
+    options?: { watermark?: boolean },
+  ): Promise<Buffer> {
     const resume = await this.resumesService.findBySlot(userId, slotName);
+    return this.generateFromData(resume, options);
+  }
 
-    if (!resume) {
-      throw new NotFoundException(`Slot "${slotName}" not found`);
-    }
-
-    const html = this.buildHtml(resume);
+  async generateFromData(
+    data: any,
+    options?: { watermark?: boolean },
+  ): Promise<Buffer> {
+    const watermark = options?.watermark ?? false;
+    const html = this.buildHtml(data);
 
     const browser = await puppeteer.launch({
       headless: true,
@@ -30,7 +37,21 @@ export class PdfService {
       const pdf = await page.pdf({
         format: 'A4',
         printBackground: true,
-        margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' },
+        margin: {
+          top: '20mm',
+          bottom: watermark ? '25mm' : '20mm',
+          left: '15mm',
+          right: '15mm',
+        },
+        displayHeaderFooter: watermark,
+        headerTemplate: '<span></span>',
+        footerTemplate: watermark
+          ? `<div style="width:100%;text-align:center;font-size:9px;
+               color:#999;font-family:Arial,sans-serif;padding-bottom:6px;">
+               Created with <strong style="color:#1e3a5f;">inresume.com</strong>
+               &nbsp;&middot;&nbsp; Remove watermark with <strong>Premium</strong>
+             </div>`
+          : '<span></span>',
       });
       return Buffer.from(pdf);
     } finally {

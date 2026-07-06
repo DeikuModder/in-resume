@@ -25,12 +25,14 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION:-7d}
       PORT: 3000
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:80}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost}
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ""
     container_name: in-resume-frontend
     restart: unless-stopped
     ports:

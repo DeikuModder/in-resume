@@ -109,5 +109,30 @@
     "select-slot": "Select slot",
     "save-slot": "Save slot",
     "selected": "Selected"
+  },
+  "auth": {
+    "sign-in": "Sign In",
+    "title-login": "Sign In",
+    "title-register": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "password-hint": "At least 8 characters",
+    "submit-login": "Log In",
+    "submit-register": "Create Account",
+    "loading": "Loading...",
+    "switch-to-register": "Don't have an account? Sign up",
+    "switch-to-login": "Already have an account? Log in",
+    "logout": "Log out",
+    "error-generic": "Something went wrong. Please try again."
+  },
+  "pdf": {
+    "download": "Download PDF",
+    "generating": "Generating...",
+    "upsell": "Resume downloaded! Remove the watermark by upgrading to Premium.",
+    "upsellStrong": "Enjoying IN-RESUMÉ? Save resumes to the cloud and go watermark-free with Premium.",
+    "rateLimit": "Too many downloads. Please wait an hour before trying again.",
+    "premiumGate": "This template is exclusive to Premium subscribers. Upgrade to unlock all premium designs.",
+    "upgradeCta": "Upgrade to Premium",
+    "premiumGateClose": "Use a free template"
   }
 }

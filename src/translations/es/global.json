@@ -109,5 +109,30 @@
     "select-slot": "Elegir ranura",
     "save-slot": "Guardar en ranura",
     "selected": "Seleccionada"
+  },
+  "auth": {
+    "sign-in": "Iniciar Sesión",
+    "title-login": "Iniciar Sesión",
+    "title-register": "Crear Cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "password-hint": "Mínimo 8 caracteres",
+    "submit-login": "Iniciar Sesión",
+    "submit-register": "Crear Cuenta",
+    "loading": "Cargando...",
+    "switch-to-register": "¿No tienes cuenta? Regístrate",
+    "switch-to-login": "¿Ya tienes cuenta? Inicia sesión",
+    "logout": "Cerrar sesión",
+    "error-generic": "Algo salió mal. Por favor intenta de nuevo."
+  },
+  "pdf": {
+    "download": "Descargar PDF",
+    "generating": "Generando...",
+    "upsell": "¡CV descargado! Elimina la marca de agua actualizando a Premium.",
+    "upsellStrong": "¿Disfrutando IN-RESUMÉ? Guarda CVs en la nube y descarga sin marca de agua con Premium.",
+    "rateLimit": "Demasiadas descargas. Por favor espera una hora antes de intentarlo de nuevo.",
+    "premiumGate": "Esta plantilla es exclusiva para suscriptores Premium. Actualiza para desbloquear todos los diseños premium.",
+    "upgradeCta": "Actualizar a Premium",
+    "premiumGateClose": "Usar plantilla gratuita"
   }
 }

@@ -3,6 +3,10 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
+# Accept build-time env vars for Vite
+ARG VITE_API_URL=""
+ENV VITE_API_URL=$VITE_API_URL
+
 # Install pnpm
 RUN npm install -g pnpm@9 && pnpm config set network-timeout 300000
 

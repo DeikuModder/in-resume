@@ -11,6 +11,10 @@ export class UsersService {
     return this.userModel.findOne({ email: email.toLowerCase() }).exec();
   }
 
+  async findById(id: string): Promise<UserDocument | null> {
+    return this.userModel.findById(id).exec();
+  }
+
   async create(email: string, hashedPassword: string): Promise<UserDocument> {
     const user = new this.userModel({ email, password: hashedPassword });
     return user.save();

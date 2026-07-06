@@ -1,0 +1,21 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import ImageKit from 'imagekit';
+
+@Injectable()
+export class ImageKitService {
+  private imagekit: ImageKit;
+  private readonly logger = new Logger(ImageKitService.name);
+
+  constructor(private configService: ConfigService) {
+    this.imagekit = new ImageKit({
+      publicKey: this.configService.get<string>('IMAGEKIT_PUBLIC_KEY') || '',
+      privateKey: this.configService.get<string>('IMAGEKIT_PRIVATE_KEY') || '',
+      urlEndpoint: this.configService.get<string>('IMAGEKIT_URL_ENDPOINT') || '',
+    });
+  }
+
+  getAuthenticationParameters() {
+    return this.imagekit.getAuthenticationParameters();
+  }
+}

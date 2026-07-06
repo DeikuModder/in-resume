@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { API_BASE } from "../services/api";
 import {
   faCamera,
   faLayerGroup,
@@ -29,11 +30,45 @@ const Toolbar = () => {
   const hiddenSections = cvInfo.hiddenSections ?? [];
   const hiddenList = ALL_SECTIONS.filter((s) => hiddenSections.includes(s.id));
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    setCvInfo({ ...cvInfo, pictureUrl: url });
+
+    try {
+      setIsUploading(true);
+      // 1. Get authentication parameters from backend
+      const authRes = await fetch(`${API_BASE}/imagekit/auth`);
+      if (!authRes.ok) throw new Error("Failed to get ImageKit auth");
+      const authData = await authRes.json();
+
+      // 2. Upload to ImageKit REST API
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("publicKey", import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY || "");
+      formData.append("signature", authData.signature);
+      formData.append("expire", authData.expire.toString());
+      formData.append("token", authData.token);
+      formData.append("fileName", file.name);
+      formData.append("folder", "/resumes");
+
+      const uploadRes = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadRes.ok) throw new Error("Failed to upload image");
+      const uploadData = await uploadRes.json();
+
+      // 3. Set the resulting URL
+      setCvInfo({ ...cvInfo, pictureUrl: uploadData.url });
+    } catch (err) {
+      console.error("Error uploading image:", err);
+      alert("Failed to upload image. Check console for details.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -86,16 +121,21 @@ const Toolbar = () => {
 
         {/* Photo upload */}
         <label
-          className="cursor-pointer bg-neutral-800 hover:bg-neutral-700 text-white p-3 rounded-full shadow-lg transition-colors"
+          className={`cursor-pointer ${isUploading ? "bg-neutral-500 cursor-not-allowed" : "bg-neutral-800 hover:bg-neutral-700"} text-white p-3 rounded-full shadow-lg transition-colors flex items-center justify-center`}
           title="Upload photo"
         >
-          <FontAwesomeIcon icon={faCamera} />
+          {isUploading ? (
+            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+          ) : (
+            <FontAwesomeIcon icon={faCamera} />
+          )}
           <input
             ref={imageInputRef}
             type="file"
             accept="image/*"
             className="hidden"
             onChange={handleImageUpload}
+            disabled={isUploading}
           />
         </label>
 

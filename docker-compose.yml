@@ -35,6 +35,8 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ""
+        VITE_IMAGEKIT_PUBLIC_KEY: ""
+        VITE_IMAGEKIT_URL_ENDPOINT: ""
     container_name: in-resume-frontend
     restart: unless-stopped
     ports:

@@ -79,8 +79,13 @@ export class Resume {
   @Prop({ type: [{ type: Object }], default: [] }) certificates: Certificate[];
 
   @Prop({ default: 0, min: 0, max: 2 }) designIndex: number;
+
+  @Prop({ default: false }) isPublic: boolean;
+  @Prop({ default: false }) isPrimary: boolean;
+  @Prop({ trim: true, lowercase: true, sparse: true }) publicSlug?: string;
 }
 
 export const ResumeSchema = SchemaFactory.createForClass(Resume);
 
 ResumeSchema.index({ userId: 1, slotName: 1 }, { unique: true });
+ResumeSchema.index({ userId: 1, publicSlug: 1 }, { unique: true, sparse: true });

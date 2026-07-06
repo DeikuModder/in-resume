@@ -1,6 +1,9 @@
+packages:
+  - "."
+
 allowBuilds:
-  '@fortawesome/fontawesome-common-types': true
-  '@fortawesome/fontawesome-svg-core': true
-  '@fortawesome/free-solid-svg-icons': true
-  '@swc/core': true
+  "@fortawesome/fontawesome-common-types": true
+  "@fortawesome/fontawesome-svg-core": true
+  "@fortawesome/free-solid-svg-icons": true
+  "@swc/core": true
   esbuild: true

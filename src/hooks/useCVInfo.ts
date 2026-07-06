@@ -17,6 +17,8 @@ const useCVInfo = () => {
     setAccentColor,
     slots,
     setSlot,
+    hideSection,
+    showSection,
   } = useCV;
 
   return {
@@ -34,6 +36,8 @@ const useCVInfo = () => {
     setAccentColor,
     slots,
     setSlot,
+    hideSection,
+    showSection,
   };
 };
 

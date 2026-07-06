@@ -12,8 +12,10 @@ const AboutMe = ({
   additionClass?: string;
   margin?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("about-me-section")) return null;
 
   return (
     <Section
@@ -21,6 +23,7 @@ const AboutMe = ({
       sectionTitle={t("about-me.title")}
       additionClass={additionClass}
       margin={margin}
+      onHide={() => hideSection("about-me-section")}
     >
       <EditableTextArea
         value={cvInfo.aboutMe}

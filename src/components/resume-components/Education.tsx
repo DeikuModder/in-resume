@@ -22,8 +22,10 @@ const Education = ({
   margin?: string;
   additionClass?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("education-section")) return null;
 
   const updateEntry = (
     index: number,
@@ -57,6 +59,7 @@ const Education = ({
       sectionId="education-section"
       margin={margin}
       additionClass={`${additionClass ?? ""} ${cvInfo.education.length === 0 ? "print:hidden" : ""}`}
+      onHide={() => hideSection("education-section")}
     >
       <ul className={`${fontSize}`}>
         {cvInfo.education.map((institution, index) => (

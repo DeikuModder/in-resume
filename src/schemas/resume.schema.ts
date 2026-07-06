@@ -61,6 +61,7 @@ export const ResumeInfoSchema = z.object({
   softSkills: z.array(SoftSkillSchema),
   certificates: z.array(CertificateSchema),
   slot: z.string(),
+  hiddenSections: z.array(z.string()).optional(),
 });
 
 export type ResumeInfoInput = z.infer<typeof ResumeInfoSchema>;

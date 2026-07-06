@@ -16,8 +16,10 @@ const Experience = ({
   margin?: string;
   additionClass?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("experience-section")) return null;
 
   const updateWork = (index: number, field: keyof Jobs, value: string) => {
     const newExp = [...cvInfo.experience];
@@ -54,6 +56,7 @@ const Experience = ({
       sectionId="experience-section"
       margin={margin}
       additionClass={`${additionClass ?? ""} ${cvInfo.experience.length === 0 ? "print:hidden" : ""}`}
+      onHide={() => hideSection("experience-section")}
     >
       <ul className={`${fontSize}`}>
         {cvInfo.experience.map((work, index) => (

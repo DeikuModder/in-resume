@@ -60,14 +60,14 @@ export class PdfService {
   }
 
   private buildHtml(resume: any): string {
-    const skillBadges = (resume.skills as string[])
+    const skillBadges = ((resume.skills ?? []) as string[])
       .map(
         (s) =>
           `<span style="display:inline-block;padding:3px 10px;background:#1e3a5f;color:#fff;border-radius:4px;font-size:12px;margin:3px;">${this.esc(s)}</span>`,
       )
       .join('');
 
-    const experienceItems = resume.experience
+    const experienceItems = (resume.experience ?? [])
       .map(
         (j: any) => `
         <div style="margin-bottom:12px;">
@@ -81,7 +81,7 @@ export class PdfService {
       )
       .join('');
 
-    const educationItems = resume.education
+    const educationItems = (resume.education ?? [])
       .map(
         (e: any) => `
         <div style="margin-bottom:10px;">
@@ -94,7 +94,7 @@ export class PdfService {
       )
       .join('');
 
-    const projectItems = resume.projects
+    const projectItems = (resume.projects ?? [])
       .map(
         (p: any) => `
         <div style="margin-bottom:10px;">
@@ -106,7 +106,7 @@ export class PdfService {
       )
       .join('');
 
-    const certItems = resume.certificates
+    const certItems = (resume.certificates ?? [])
       .map(
         (c: any) => `
         <div style="margin-bottom:8px;">
@@ -116,14 +116,14 @@ export class PdfService {
       )
       .join('');
 
-    const languageItems = resume.languages
+    const languageItems = (resume.languages ?? [])
       .map(
         (l: any) =>
           `<span style="margin-right:16px;"><strong>${this.esc(l.languageName)}</strong>: ${this.esc(l.level)}</span>`,
       )
       .join('');
 
-    const softSkillItems = resume.softSkills
+    const softSkillItems = (resume.softSkills ?? [])
       .map(
         (s: any) => `
         <div style="margin-bottom:6px;">

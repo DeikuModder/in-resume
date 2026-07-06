@@ -17,8 +17,10 @@ const Language = ({
   margin?: string;
   additionClass?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("Languages-section")) return null;
 
   const updateLang = (index: number, field: keyof LangType, value: string) => {
     const newLangs = [...cvInfo.languages];
@@ -45,6 +47,7 @@ const Language = ({
       sectionId="Languages-section"
       margin={margin}
       additionClass={`${additionClass ?? ""} ${cvInfo.languages.length === 0 ? "print:hidden" : ""}`}
+      onHide={() => hideSection("Languages-section")}
     >
       <ul className={`flex gap-8 list-none ${fontSize}`}>
         {cvInfo.languages.map((language, index) => (

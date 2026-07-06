@@ -16,8 +16,10 @@ const Projects = ({
   margin?: string;
   additionClass?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("projects-section")) return null;
 
   const updateProject = (
     index: number,
@@ -51,6 +53,7 @@ const Projects = ({
       sectionId="projects-section"
       margin={margin}
       additionClass={`${additionClass ?? ""} ${cvInfo.projects.length === 0 ? "print:hidden" : ""}`}
+      onHide={() => hideSection("projects-section")}
     >
       <ul className={`inline-flex flex-wrap gap-4 list-none ${fontSize}`}>
         {cvInfo.projects.map((project, index) => (

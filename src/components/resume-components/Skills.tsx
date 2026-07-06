@@ -6,8 +6,10 @@ import SkillsObj from "./skills/index";
 import { useTranslation } from "react-i18next";
 
 const Skills = ({ margin }: { margin?: string }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("skills-section")) return null;
 
   const handleRemoveSkill = (index: number) => {
     const newCv = { ...cvInfo };
@@ -21,6 +23,7 @@ const Skills = ({ margin }: { margin?: string }) => {
       sectionId="skills-section"
       additionClass={`${cvInfo.skills.length <= 0 && "hideOnPrint"}`}
       margin={margin}
+      onHide={() => hideSection("skills-section")}
     >
       <ul className="inline-flex flex-wrap gap-4 list-none">
         {cvInfo.skills.map((name, index) => {

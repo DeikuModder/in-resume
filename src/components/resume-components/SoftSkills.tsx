@@ -23,8 +23,11 @@ const SoftSkills = ({
   margin?: string;
   additionClass?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("soft-skills-section"))
+    return null;
 
   const updateSkill = (
     index: number,
@@ -55,6 +58,7 @@ const SoftSkills = ({
       sectionId="soft-skills-section"
       margin={margin}
       additionClass={`${additionClass ?? ""} ${cvInfo.softSkills.length === 0 ? "print:hidden" : ""}`}
+      onHide={() => hideSection("soft-skills-section")}
     >
       <ul className={`${fontSize}`}>
         {cvInfo.softSkills.map((skill, index) => (

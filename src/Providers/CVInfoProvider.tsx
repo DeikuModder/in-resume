@@ -22,6 +22,8 @@ type useCVReturnType = {
   setAccentColor: (color: string) => void;
   slots: Record<string, ResumeInfo>;
   setSlot: (key: string, info: ResumeInfo) => void;
+  hideSection: (id: string) => void;
+  showSection: (id: string) => void;
 };
 
 const useCV = (): useCVReturnType => {
@@ -48,6 +50,7 @@ const useCV = (): useCVReturnType => {
     softSkills: [],
     certificates: [],
     slot: "main",
+    hiddenSections: [],
   };
 
   const [cvInfo, setCvInfo] = useLocalStorage<ResumeInfo>(
@@ -109,6 +112,20 @@ const useCV = (): useCVReturnType => {
     setSlotsRaw({ ...slots, [key]: info });
   };
 
+  const hideSection = (id: string) => {
+    const current = cvInfo.hiddenSections ?? [];
+    if (!current.includes(id)) {
+      setCvInfo({ ...cvInfo, hiddenSections: [...current, id] });
+    }
+  };
+
+  const showSection = (id: string) => {
+    setCvInfo({
+      ...cvInfo,
+      hiddenSections: (cvInfo.hiddenSections ?? []).filter((s) => s !== id),
+    });
+  };
+
   // â”€â”€â”€ Autosave debounce (2 s) â€” syncs to backend when authenticated â”€â”€â”€â”€â”€â”€â”€â”€
   const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -149,6 +166,8 @@ const useCV = (): useCVReturnType => {
     setAccentColor,
     slots,
     setSlot,
+    hideSection,
+    showSection,
   };
 };
 

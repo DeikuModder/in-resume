@@ -22,8 +22,11 @@ const Certificates = ({
   fontSize?: string;
   additionClass?: string;
 }) => {
-  const { cvInfo, setCvInfo } = useCVInfo();
+  const { cvInfo, setCvInfo, hideSection } = useCVInfo();
   const { t } = useTranslation("global");
+
+  if ((cvInfo.hiddenSections ?? []).includes("certificates-section"))
+    return null;
 
   const updateCert = (index: number, field: keyof CertType, value: string) => {
     const newCerts = [...cvInfo.certificates];
@@ -53,6 +56,7 @@ const Certificates = ({
       sectionId="certificates-section"
       margin={margin}
       additionClass={`${additionClass ?? ""} ${cvInfo.certificates.length === 0 ? "print:hidden" : ""}`}
+      onHide={() => hideSection("certificates-section")}
     >
       <ul className={`${fontSize}`}>
         {cvInfo.certificates.map((certificate, index) => (

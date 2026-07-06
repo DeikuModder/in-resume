@@ -13,7 +13,7 @@ const Section = ({
 }) => {
   return (
     <section id={sectionId} className={`${margin}`}>
-      <h3 className={`font-bold mb-2 ${additionClass}`}>{sectionTitle}</h3>
+      <h3 className={`font-bold mb-2 [color:var(--accent)] ${additionClass}`}>{sectionTitle}</h3>
       {children}
     </section>
   );

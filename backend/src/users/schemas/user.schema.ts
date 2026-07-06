@@ -6,10 +6,10 @@ export type UserDocument = HydratedDocument<User>;
 @Schema({ timestamps: true })
 export class User {
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
-  email: string;
+  email!: string;
 
   @Prop({ required: true })
-  password: string;
+  password!: string;
 
   @Prop({
     unique: true,
@@ -21,11 +21,35 @@ export class User {
   })
   username?: string;
 
-  @Prop({ unique: true, sparse: true, lowercase: true, trim: true, index: true })
+  @Prop({
+    unique: true,
+    sparse: true,
+    lowercase: true,
+    trim: true,
+    index: true,
+  })
   customDomain?: string;
 
   @Prop({ default: false })
-  isPremium: boolean;
+  isPremium!: boolean;
+  @Prop({ type: String, enum: ['free', 'premium'], default: 'free' })
+  subscriptionTier!: 'free' | 'premium';
+
+  @Prop({ type: String, index: true })
+  stripeCustomerId?: string;
+
+  @Prop({ type: String })
+  stripeSubscriptionId?: string;
+
+  @Prop({
+    type: String,
+    enum: ['active', 'canceled', 'past_due', 'none'],
+    default: 'none',
+  })
+  subscriptionStatus!: 'active' | 'canceled' | 'past_due' | 'none';
+
+  @Prop({ type: Date })
+  subscriptionPeriodEnd?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

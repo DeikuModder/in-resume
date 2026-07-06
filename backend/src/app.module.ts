@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ResumesModule } from './resumes/resumes.module';
 import { PdfModule } from './pdf/pdf.module';
 import { PublicModule } from './public/public.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PublicModule } from './public/public.module';
     ResumesModule,
     PdfModule,
     PublicModule,
+    SubscriptionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -2,7 +2,6 @@ import {
   Controller,
   Post,
   Get,
-  Patch,
   Body,
   UseGuards,
   Request,
@@ -12,15 +11,18 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { UpdateProfileDto } from '../users/dto/update-profile.dto';
+import { UsersService } from 'src/users/users.service';
 
-interface AuthRequest {
-  user: { userId: string; email: string };
-}
+// interface AuthRequest {
+//   user: { userId: string; email: string };
+// }
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   @Throttle({ default: { ttl: 60000, limit: 5 } })
   @Post('register')
@@ -36,13 +38,14 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  me(@Request() req: AuthRequest) {
-    return this.authService.getMe(req.user.userId);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch('profile')
-  updateProfile(@Request() req: AuthRequest, @Body() dto: UpdateProfileDto) {
-    return this.authService.updateProfile(req.user.userId, dto.username);
+  async me(@Request() req: { user: { userId: string; email: string } }) {
+    const user = await this.usersService.findById(req.user.userId);
+    return {
+      userId: req.user.userId,
+      email: req.user.email,
+      tier: user?.subscriptionTier || 'free',
+      subscriptionStatus: user?.subscriptionStatus || 'none',
+      subscriptionPeriodEnd: user?.subscriptionPeriodEnd || null,
+    };
   }
 }

@@ -92,9 +92,7 @@ export class UsersService {
     if (!user) throw new NotFoundException('User not found');
   }
 
-  async verifyCustomDomain(
-    userId: string,
-  ): Promise<{
+  async verifyCustomDomain(userId: string): Promise<{
     verified: boolean;
     domain: string | null;
     expectedCname: string;
@@ -123,5 +121,41 @@ export class UsersService {
     } catch {
       return { verified: false, domain: user.customDomain, expectedCname };
     }
+  }
+
+  async findByStripeCustomerId(
+    stripeCustomerId: string,
+  ): Promise<UserDocument | null> {
+    return this.userModel.findOne({ stripeCustomerId }).exec();
+  }
+
+  async updateStripeInfo(
+    userId: string,
+    data: {
+      stripeCustomerId?: string;
+      stripeSubscriptionId?: string;
+      subscriptionTier?: 'free' | 'premium';
+      subscriptionStatus?: 'active' | 'canceled' | 'past_due' | 'none';
+      subscriptionPeriodEnd?: Date | null;
+    },
+  ): Promise<UserDocument | null> {
+    return this.userModel
+      .findByIdAndUpdate(userId, { $set: data }, { new: true })
+      .exec();
+  }
+
+  async downgradeToFree(userId: string): Promise<UserDocument | null> {
+    return this.userModel
+      .findByIdAndUpdate(
+        userId,
+        {
+          $set: {
+            subscriptionTier: 'free',
+            subscriptionStatus: 'canceled',
+          },
+        },
+        { new: true },
+      )
+      .exec();
   }
 }

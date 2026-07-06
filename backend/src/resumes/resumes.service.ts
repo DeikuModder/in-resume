@@ -1,15 +1,14 @@
 import {
   Injectable,
   NotFoundException,
-  BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Resume, ResumeDocument } from './schemas/resume.schema';
 import { UpsertResumeDto } from './dto/upsert-resume.dto';
 import { PublishResumeDto } from './dto/publish-resume.dto';
-
-const MAX_SLOTS = 6;
+import { UsersService } from '../users/users.service';
 
 function slugify(text: string): string {
   return text
@@ -23,6 +22,7 @@ function slugify(text: string): string {
 export class ResumesService {
   constructor(
     @InjectModel(Resume.name) private resumeModel: Model<ResumeDocument>,
+    private readonly usersService: UsersService,
   ) {}
 
   async findAll(userId: string): Promise<ResumeDocument[]> {
@@ -47,7 +47,30 @@ export class ResumesService {
   async upsert(userId: string, dto: UpsertResumeDto): Promise<ResumeDocument> {
     const { slotName, ...data } = dto;
 
-    const existing = await this.resumeModel.countDocuments({
+    const user = await this.usersService.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isPremium = user.subscriptionTier === 'premium';
+    const MAX_SLOTS = isPremium ? 6 : 2;
+
+    if (!isPremium && dto.designIndex !== undefined && dto.designIndex > 0) {
+      throw new ForbiddenException(
+        'Free tier users can only use the default template design',
+      );
+    }
+
+    if (!isPremium) {
+      const slotNumber = parseInt(slotName.replace('slot', ''), 10);
+      if (slotNumber > 2) {
+        throw new ForbiddenException(
+          'Please upgrade to premium to edit or save to this slot.',
+        );
+      }
+    }
+
+    const existingCount = await this.resumeModel.countDocuments({
       userId: new Types.ObjectId(userId),
     });
 
@@ -56,9 +79,9 @@ export class ResumesService {
       slotName,
     }));
 
-    if (isNew && existing >= MAX_SLOTS) {
-      throw new BadRequestException(
-        `Maximum of ${MAX_SLOTS} resume slots reached`,
+    if (isNew && existingCount >= MAX_SLOTS) {
+      throw new ForbiddenException(
+        `Maximum of ${MAX_SLOTS} resume slots reached. Please upgrade to create more.`,
       );
     }
 
@@ -71,7 +94,7 @@ export class ResumesService {
       .select('-__v')
       .exec();
 
-    return resume!;
+    return resume;
   }
 
   async remove(userId: string, id: string): Promise<void> {
@@ -102,7 +125,10 @@ export class ResumesService {
     if (!resume) throw new NotFoundException('Resume not found');
 
     const publicSlug =
-      dto.slug ?? (dto.isPublic ? slugify(resume.name || resume.slotName) : resume.publicSlug);
+      dto.slug ??
+      (dto.isPublic
+        ? slugify(resume.name || resume.slotName)
+        : resume.publicSlug);
 
     // Enforce single isPrimary per user
     if (dto.isPrimary && dto.isPublic) {
@@ -113,7 +139,9 @@ export class ResumesService {
     }
 
     // If turning off public, also clear isPrimary
-    const isPrimary = dto.isPublic ? (dto.isPrimary ?? resume.isPrimary) : false;
+    const isPrimary = dto.isPublic
+      ? (dto.isPrimary ?? resume.isPrimary)
+      : false;
 
     const updated = await this.resumeModel
       .findOneAndUpdate(
@@ -129,7 +157,11 @@ export class ResumesService {
 
   async findPublicPrimary(userId: string): Promise<ResumeDocument> {
     const resume = await this.resumeModel
-      .findOne({ userId: new Types.ObjectId(userId), isPublic: true, isPrimary: true })
+      .findOne({
+        userId: new Types.ObjectId(userId),
+        isPublic: true,
+        isPrimary: true,
+      })
       .select('-__v')
       .exec();
 
@@ -137,7 +169,10 @@ export class ResumesService {
     return resume;
   }
 
-  async findPublicBySlug(userId: string, slug: string): Promise<ResumeDocument> {
+  async findPublicBySlug(
+    userId: string,
+    slug: string,
+  ): Promise<ResumeDocument> {
     const resume = await this.resumeModel
       .findOne({
         userId: new Types.ObjectId(userId),

@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Get,
+  Patch,
   Body,
   UseGuards,
   Request,
@@ -11,6 +12,11 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UpdateProfileDto } from '../users/dto/update-profile.dto';
+
+interface AuthRequest {
+  user: { userId: string; email: string };
+}
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +36,13 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  me(@Request() req: { user: { userId: string; email: string } }) {
-    return { userId: req.user.userId, email: req.user.email };
+  me(@Request() req: AuthRequest) {
+    return this.authService.getMe(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('profile')
+  updateProfile(@Request() req: AuthRequest, @Body() dto: UpdateProfileDto) {
+    return this.authService.updateProfile(req.user.userId, dto.username);
   }
 }

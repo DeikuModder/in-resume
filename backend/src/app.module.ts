@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ResumesModule } from './resumes/resumes.module';
 import { PdfModule } from './pdf/pdf.module';
+import { PublicModule } from './public/public.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PdfModule } from './pdf/pdf.module';
     AuthModule,
     ResumesModule,
     PdfModule,
+    PublicModule,
   ],
   controllers: [AppController],
   providers: [AppService],

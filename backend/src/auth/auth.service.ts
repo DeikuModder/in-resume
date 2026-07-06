@@ -43,4 +43,27 @@ export class AuthService {
     const payload = { sub: user._id.toString(), email: user.email };
     return { access_token: this.jwtService.sign(payload) };
   }
+
+  async getMe(
+    userId: string,
+  ): Promise<{ userId: string; email: string; username?: string }> {
+    const user = await this.usersService.findById(userId);
+    return {
+      userId,
+      email: user?.email ?? '',
+      username: user?.username,
+    };
+  }
+
+  async updateProfile(
+    userId: string,
+    username: string,
+  ): Promise<{ userId: string; email: string; username?: string }> {
+    const user = await this.usersService.updateUsername(userId, username);
+    return {
+      userId: user._id.toString(),
+      email: user.email,
+      username: user.username,
+    };
+  }
 }

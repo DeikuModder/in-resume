@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Delete,
   Body,
   Param,
@@ -10,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ResumesService } from './resumes.service';
 import { UpsertResumeDto } from './dto/upsert-resume.dto';
+import { PublishResumeDto } from './dto/publish-resume.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 interface AuthRequest {
@@ -34,6 +36,15 @@ export class ResumesController {
   @Post()
   upsert(@Request() req: AuthRequest, @Body() dto: UpsertResumeDto) {
     return this.resumesService.upsert(req.user.userId, dto);
+  }
+
+  @Patch(':id/publish')
+  publish(
+    @Request() req: AuthRequest,
+    @Param('id') id: string,
+    @Body() dto: PublishResumeDto,
+  ) {
+    return this.resumesService.publish(req.user.userId, id, dto);
   }
 
   @Delete(':id')

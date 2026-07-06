@@ -7,8 +7,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Resume, ResumeDocument } from './schemas/resume.schema';
 import { UpsertResumeDto } from './dto/upsert-resume.dto';
+import { PublishResumeDto } from './dto/publish-resume.dto';
 
 const MAX_SLOTS = 6;
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+}
 
 @Injectable()
 export class ResumesService {
@@ -76,5 +85,69 @@ export class ResumesService {
     if (!result) {
       throw new NotFoundException('Resume not found');
     }
+  }
+
+  async publish(
+    userId: string,
+    id: string,
+    dto: PublishResumeDto,
+  ): Promise<ResumeDocument> {
+    const userOid = new Types.ObjectId(userId);
+    const resumeOid = new Types.ObjectId(id);
+
+    const resume = await this.resumeModel
+      .findOne({ _id: resumeOid, userId: userOid })
+      .exec();
+
+    if (!resume) throw new NotFoundException('Resume not found');
+
+    const publicSlug =
+      dto.slug ?? (dto.isPublic ? slugify(resume.name || resume.slotName) : resume.publicSlug);
+
+    // Enforce single isPrimary per user
+    if (dto.isPrimary && dto.isPublic) {
+      await this.resumeModel.updateMany(
+        { userId: userOid, _id: { $ne: resumeOid } },
+        { $set: { isPrimary: false } },
+      );
+    }
+
+    // If turning off public, also clear isPrimary
+    const isPrimary = dto.isPublic ? (dto.isPrimary ?? resume.isPrimary) : false;
+
+    const updated = await this.resumeModel
+      .findOneAndUpdate(
+        { _id: resumeOid, userId: userOid },
+        { $set: { isPublic: dto.isPublic, isPrimary, publicSlug } },
+        { new: true, runValidators: true },
+      )
+      .select('-__v')
+      .exec();
+
+    return updated!;
+  }
+
+  async findPublicPrimary(userId: string): Promise<ResumeDocument> {
+    const resume = await this.resumeModel
+      .findOne({ userId: new Types.ObjectId(userId), isPublic: true, isPrimary: true })
+      .select('-__v')
+      .exec();
+
+    if (!resume) throw new NotFoundException('No public primary resume found');
+    return resume;
+  }
+
+  async findPublicBySlug(userId: string, slug: string): Promise<ResumeDocument> {
+    const resume = await this.resumeModel
+      .findOne({
+        userId: new Types.ObjectId(userId),
+        isPublic: true,
+        publicSlug: slug.toLowerCase(),
+      })
+      .select('-__v')
+      .exec();
+
+    if (!resume) throw new NotFoundException('Resume not found');
+    return resume;
   }
 }

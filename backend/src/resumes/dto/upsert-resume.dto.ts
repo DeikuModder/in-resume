@@ -117,4 +117,22 @@ export class UpsertResumeDto {
   @Min(0)
   @Max(2)
   designIndex?: number;
+
+  @IsString() @IsOptional() templateId?: string;
+  @IsString() @IsOptional() accentColor?: string;
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  sectionOrder?: string[];
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  sidebarOrder?: string[];
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  hiddenSections?: string[];
 }

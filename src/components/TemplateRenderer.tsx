@@ -30,6 +30,7 @@ const TemplateRenderer = ({
   if (config.layout === "two-column") {
     return (
       <div
+        data-resume-ready
         className={`${config.styles.pageWidth} ${config.styles.font}`}
         style={wrapperStyle}
       >
@@ -50,6 +51,7 @@ const TemplateRenderer = ({
 
   return (
     <div
+      data-resume-ready
       className={`${config.styles.pageWidth} ${config.styles.spacing} ${config.styles.font}`}
       style={wrapperStyle}
     >

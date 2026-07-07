@@ -140,7 +140,14 @@ const useCV = (): useCVReturnType => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ slotName: "slot1", ...cvInfo }),
+          body: JSON.stringify({
+            slotName: "slot1",
+            ...cvInfo,
+            templateId,
+            accentColor,
+            sectionOrder,
+            sidebarOrder,
+          }),
         });
       } catch {
         // silent â€” autosave is best-effort

@@ -80,6 +80,12 @@ export class Resume {
 
   @Prop({ default: 0, min: 0, max: 2 }) designIndex: number;
 
+  @Prop({ default: '' }) templateId: string;
+  @Prop({ default: '' }) accentColor: string;
+  @Prop({ type: [String], default: [] }) sectionOrder: string[];
+  @Prop({ type: [String], default: [] }) sidebarOrder: string[];
+  @Prop({ type: [String], default: [] }) hiddenSections: string[];
+
   @Prop({ default: false }) isPublic: boolean;
   @Prop({ default: false }) isPrimary: boolean;
   @Prop({ trim: true, lowercase: true, sparse: true }) publicSlug?: string;

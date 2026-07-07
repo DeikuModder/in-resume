@@ -40,6 +40,23 @@ export class AnonymousPdfDto {
   })
   templateId?: string;
 
+  @IsString() @IsOptional() accentColor?: string;
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  sectionOrder?: string[];
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  sidebarOrder?: string[];
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  hiddenSections?: string[];
+
   @IsArray()
   @IsOptional()
   @ArrayMaxSize(20)

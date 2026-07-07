@@ -16,7 +16,7 @@ const DOWNLOAD_COUNT_KEY = "pdfDownloadCount";
 const PrintButton = () => {
   const { t } = useTranslation("global");
   const { user, token } = useAuth();
-  const { cvInfo, templateId } = useCVInfo();
+  const { cvInfo, templateId, accentColor, sectionOrder, sidebarOrder } = useCVInfo();
   const [isGenerating, setIsGenerating] = useState(false);
   const [showUpsell, setShowUpsell] = useState(false);
   const [showPremiumGate, setShowPremiumGate] = useState(false);
@@ -81,6 +81,11 @@ const PrintButton = () => {
             skills: cvInfo.skills,
             softSkills: cvInfo.softSkills,
             certificates: cvInfo.certificates,
+            hiddenSections: cvInfo.hiddenSections,
+            templateId,
+            accentColor,
+            sectionOrder,
+            sidebarOrder,
           }),
         });
 
@@ -117,7 +122,11 @@ const PrintButton = () => {
             skills: cvInfo.skills,
             softSkills: cvInfo.softSkills,
             certificates: cvInfo.certificates,
+            hiddenSections: cvInfo.hiddenSections,
             templateId,
+            accentColor,
+            sectionOrder,
+            sidebarOrder,
           }),
         });
 

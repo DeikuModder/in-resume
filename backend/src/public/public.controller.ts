@@ -9,7 +9,8 @@ import {
 import { ConfigService } from '@nestjs/config';
 import type { Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import { PublicService } from './public.service';
 import { isBot } from './bot-detection.middleware';
 
@@ -85,10 +86,7 @@ export class PublicController {
   /** OG social preview image — 1200x630 PNG. */
   @Throttle({ default: { ttl: 60000, limit: 30 } })
   @Get('og-image/:username')
-  async getOgImage(
-    @Param('username') username: string,
-    @Res() res: Response,
-  ) {
+  async getOgImage(@Param('username') username: string, @Res() res: Response) {
     const cached = this.publicService.getCachedOgImage(username);
     if (cached) {
       res.setHeader('Content-Type', 'image/png');
@@ -131,7 +129,9 @@ export class PublicController {
     const profileUrl = slug
       ? `${baseUrl}/u/${username}/${slug}`
       : `${baseUrl}/u/${username}`;
-    const title = role ? `${this.esc(name)} — ${this.esc(role)}` : this.esc(name);
+    const title = role
+      ? `${this.esc(name)} — ${this.esc(role)}`
+      : this.esc(name);
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -209,16 +209,17 @@ export class PublicController {
 
   private async renderOgImage(html: string): Promise<Buffer> {
     const browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-      ],
     });
     try {
       const page = await browser.newPage();
-      await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 1 });
+      await page.setViewport({
+        width: 1200,
+        height: 630,
+        deviceScaleFactor: 1,
+      });
       await page.setContent(html, { waitUntil: 'load' });
       const screenshot = await page.screenshot({ type: 'png' });
       return Buffer.from(screenshot);

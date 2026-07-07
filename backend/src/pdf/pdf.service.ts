@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import { ResumesService } from '../resumes/resumes.service';
 
 @Injectable()
@@ -23,12 +24,9 @@ export class PdfService {
     const html = this.buildHtml(data);
 
     const browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-      ],
     });
 
     try {
